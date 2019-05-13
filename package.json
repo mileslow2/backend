@@ -1,8 +1,13 @@
 {
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "curl": "^0.1.4",
+    "express": "^4.16.4",
+    "helmet": "^3.18.0",
+    "http-server": "^0.11.1",
     "jquery": "^3.4.0",
     "jsdom": "^14.0.0",
+    "mysql": "^2.17.1",
     "selenium-webdriver": "^4.0.0-alpha.1"
   },
   "scripts": {
