@@ -53,7 +53,8 @@ const config = {
   host: "35.236.107.146",
   user: "root",
   password: "av7ijiev#8A4u%l0BGXB",
-  database: "glutenMaps"
+  database: "glutenMaps",
+  socketPath: "plucky-climate-223018:us-west2:testdb"
 };
 const saltRounds = 5;
 const con = mysql.createConnection(config);
