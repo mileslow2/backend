@@ -1,13 +1,10 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mysql = require("mysql");
-const helmet = require("helmet");
-const bcrypt = require("bcrypt");
+import express from "express";
+import bodyParser from "body-parser";
+import mysql from "mysql";
+import helmet from "helmet";
+import bcrypt from "bcrypt";
 const app = express();
-
-function passwordFromID(id) {
-  return 'SELECT `password` from `user` WHERE (`user_id`) = ("' + id + '")';
-}
+import { editUser } from "./forms/editUser.mjs";
 
 function existsQuery(email) {
   return (
@@ -104,30 +101,7 @@ con.connect(function(error) {
       res.status(200).send(result[0]);
     });
   });
-  app.post("/editUser", (req, res) => {
-    const query = passwordFromID(req.body.id);
-    con.query(query, function(error, result) {
-      if (error) throw error;
-      const password = req.body.password;
-      const hashedPassword = result[0].password;
-      bcrypt.compare(password, hashedPassword, function(err, result) {
-        if (err) throw err;
-        if (result) {
-          const query2 = editQuery(
-            req.body.email,
-            req.body.full_name,
-            req.body.id
-          );
-          con.query(query2, function(error2, result2) {
-            if (error2) throw error2;
-            res.status(200).send(true);
-          });
-        } else {
-          res.status(422).send(false);
-        }
-      });
-    });
-  });
+  editUser(app, con);
 });
 
 app.use(function(err, req, res, next) {

@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 async function comparePasswords(passwordAttempt, hashedPassword) {
   var same = false;
