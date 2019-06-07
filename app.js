@@ -50,11 +50,10 @@ function makeQuery(body) {
 }
 
 const config = {
-  host: "35.236.107.146",
+  host: "localhost",
   user: "root",
-  password: "av7ijiev#8A4u%l0BGXB",
-  database: "glutenMaps",
-  socketPath: "/cloudsql/utility-liberty-237101:us-west2:gluten-maps"
+  password: "123",
+  database: "glutenMaps"
 };
 const saltRounds = 5;
 const con = mysql.createConnection(config);
