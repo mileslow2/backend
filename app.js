@@ -22,18 +22,6 @@ function userQuery(id) {
   );
 }
 
-function editQuery(email, name, id) {
-  return (
-    'UPDATE `user` SET `email`= "' +
-    email +
-    '", `full_name`= "' +
-    name +
-    '" WHERE `user_id` = "' +
-    id +
-    '"'
-  );
-}
-
 function makeQuery(body) {
   const password = body.password;
   const email = body.email;
