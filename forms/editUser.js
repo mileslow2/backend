@@ -1,5 +1,5 @@
-import getPasswordFromID from "../helpers/getPasswordFromID.mjs";
-import comparePasswords from "../helpers/comparePasswords.mjs";
+const getPasswordFromID = require("../helpers/getPasswordFromID.js");
+const comparePasswords = require("../helpers/comparePasswords.js");
 
 function editUserQuery(email, name, id) {
   return (
@@ -20,7 +20,7 @@ function editUserAction(con, query) {
   });
 }
 
-export async function editUser(app, con) {
+module.exports = (app, con) => {
   var id, passwordAttempt, passwordsSame, query, editUserSuccesful;
   app.post("/editUser", (req, res) => {
     id = req.body.id;
@@ -34,4 +34,4 @@ export async function editUser(app, con) {
     if (passwordsSame && editUserSuccesful) res.status(200).send(true);
     else res.status(422).send(false);
   });
-}
+};

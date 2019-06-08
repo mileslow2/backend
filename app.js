@@ -1,11 +1,10 @@
-import express from "express";
-import bodyParser from "body-parser";
-import mysql from "mysql";
-import helmet from "helmet";
-import bcrypt from "bcrypt";
+const express = require("express");
+const bodyParser = require("body-parser");
+const mysql = require("mysql");
+const helmet = require("helmet");
+const bcrypt = require("bcrypt");
 const app = express();
-import { editUser } from "./forms/editUser.mjs";
-
+const editUser = require("./forms/editUser");
 function existsQuery(email) {
   return (
     'SELECT `password`, `user_id` from `user` WHERE (`email`) = ("' +
@@ -112,4 +111,5 @@ app.use(function(err, req, res, next) {
   res.status(500);
   res.render("error", { error: err });
 }); //error handler
-app.listen(2999, () => console.info("Application running on port 2999"));
+const port = 8081;
+app.listen(port, () => console.info("Application running on port " + port));
