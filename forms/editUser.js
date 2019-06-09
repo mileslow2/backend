@@ -1,14 +1,14 @@
 const getPasswordFromID = require("../helpers/getPasswordFromID.js");
 const comparePasswords = require("../helpers/comparePasswords.js");
 
-function editUserQuery(email, name, id) {
+function editUserQuery(userData) {
   return (
     'UPDATE `user` SET `email`= "' +
-    email +
+    userData.email +
     '", `full_name`= "' +
-    name +
+    userData.name +
     '" WHERE `user_id` = "' +
-    id +
+    userData.id +
     '"'
   );
 }
@@ -16,19 +16,20 @@ function editUserQuery(email, name, id) {
 function editUserAction(con, query) {
   con.query(query, function(err, res) {
     if (err) throw err;
-    else return true;
+    return true;
   });
 }
 
 module.exports = (app, con) => {
-  var id, passwordAttempt, passwordsSame, query, editUserSuccesful;
+  var id, passwordAttempt, passwordsSame, editUserSuccesful, userData;
   app.post("/editUser", (req, res) => {
     id = req.body.id;
     hashedPassword = getPasswordFromID(con, id);
     passwordAttempt = req.body.password;
     passwordsSame = comparePasswords(passwordAttempt, hashedPassword);
     if (passwordsSame) {
-      query = editUserQuery(req.body.email, req.body.full_name, req.body.id);
+      userData = req.body;
+      query = editUserQuery(userData);
       editUserSuccesful = editUserAction(con, query);
     }
     if (passwordsSame && editUserSuccesful) res.status(200).send(true);
