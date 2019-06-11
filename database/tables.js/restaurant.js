@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-module.exports = sequelize.define("review", {
+module.exports = sequelize.define("restaurant", {
   restaurant_id: {
     type: Sequelize.STRING(45),
     allowNull: false,
