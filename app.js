@@ -1,8 +1,15 @@
 const app = require("express")();
+global.app = app;
+
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const all = require("./forms/index");
-const mysql = require("mysql2");
+
+const errorHandler = err => {
+  if (err) throw err;
+};
+
+global.errorHandler = errorHandler;
 
 app.use(helmet());
 app.use(bodyParser.json());
