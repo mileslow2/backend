@@ -1,5 +1,6 @@
 const getPasswordFromID = require("../helpers/getPasswordFromID.js");
 const comparePasswords = require("../helpers/comparePasswords.js");
+const user = require("../database/models/user");
 
 function editUserQuery(userData) {
   return (
@@ -12,27 +13,26 @@ function editUserQuery(userData) {
   );
 }
 
-function editUserAction(con, query) {
-  user.update(query).then(() => {
-    console.log("Done");
-  });
-  con.query(query, function(err, res) {
-    if (err) throw err;
-    return true;
-  });
+async function editUserAction(userData) {
+  const query = editUserQuery(userData);
+  user
+    .update(query)
+    .catch(errorHandler)
+    .then(() => {
+      return true;
+    });
 }
 
-module.exports = (app, con) => {
+module.exports = () => {
   var id, passwordAttempt, passwordsSame, editUserSuccesful, userData;
   app.post("/editUser", (req, res) => {
     id = req.body.id;
-    hashedPassword = getPasswordFromID(con, id);
+    hashedPassword = getPasswordFromID(id);
     passwordAttempt = req.body.password;
     passwordsSame = comparePasswords(passwordAttempt, hashedPassword);
     if (passwordsSame) {
       userData = req.body;
-      query = editUserQuery(userData);
-      editUserSuccesful = editUserAction(con, query);
+      editUserSuccesful = await editUserAction(userData);
     }
     if (passwordsSame && editUserSuccesful) res.status(200).send(true);
     else res.status(422).send(false);
