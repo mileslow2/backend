@@ -1,13 +1,21 @@
+const user = require("../database/models/user");
+
 function makeQuery(userID) {
-  return 'SELECT `password` from `user` WHERE (`user_id`) = ("' + userID + '")';
+  return {
+    where: {
+      user_id: userID
+    }
+  };
 }
 
-module.exports = (con, userID) => {
+module.exports = userID => {
   var password;
   const query = makeQuery(userID);
-  con.query(query, function(err, res) {
-    if (err) throw err;
-    password = res[0].password;
-  });
+  user
+    .findAll(query)
+    .catch(errorHandler)
+    .then(res => {
+      password = res[0].password;
+    });
   return password;
 };
