@@ -1,25 +1,13 @@
 const app = require("express")();
 const bodyParser = require("body-parser");
-const sequelize = require("sequelize");
 const helmet = require("helmet");
 const all = require("./forms/index");
 const mysql = require("mysql2");
 
-const seq = new sequelize("glutenMaps", "root", "123", {
-  host: "localhost",
-  dialect: "mysql"
-});
-
-const config = {
-  host: "localhost",
-  user: "root",
-  password: "123",
-  database: "glutenMaps"
-};
-
-const con = mysql.createConnection(config);
 app.use(helmet());
 app.use(bodyParser.json());
+
+require("./database/connect");
 
 con.connect(function(err) {
   if (err) throw err;

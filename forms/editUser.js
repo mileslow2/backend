@@ -3,17 +3,19 @@ const comparePasswords = require("../helpers/comparePasswords.js");
 
 function editUserQuery(userData) {
   return (
-    'UPDATE `user` SET `email`= "' +
-    userData.email +
-    '", `full_name`= "' +
-    userData.name +
-    '" WHERE `user_id` = "' +
-    userData.id +
-    '"'
+    { email: userData.email, full_name: userData.name },
+    {
+      where: {
+        user_id: userData.id
+      }
+    }
   );
 }
 
 function editUserAction(con, query) {
+  user.update(query).then(() => {
+    console.log("Done");
+  });
   con.query(query, function(err, res) {
     if (err) throw err;
     return true;
