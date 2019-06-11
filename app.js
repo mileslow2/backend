@@ -1,9 +1,14 @@
-const express = require("express");
+const app = require("express")();
 const bodyParser = require("body-parser");
-const mysql = require("mysql");
+const sequelize = require("sequelize");
 const helmet = require("helmet");
-const app = express();
 const all = require("./forms/index");
+const mysql = require("mysql2");
+
+const seq = new sequelize("glutenMaps", "root", "123", {
+  host: "localhost",
+  dialect: "mysql"
+});
 
 const config = {
   host: "localhost",
