@@ -11,7 +11,7 @@ function makeQuery(userID) {
 module.exports = userID => {
   var password;
   const query = makeQuery(userID);
-  user
+  await user
     .findAll(query)
     .catch(errorHandler)
     .then(res => {

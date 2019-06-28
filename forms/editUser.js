@@ -15,7 +15,7 @@ function editUserQuery(userData) {
 
 async function editUserAction(userData) {
   const query = editUserQuery(userData);
-  user
+  await user
     .update(query)
     .catch(errorHandler)
     .then(() => {
@@ -27,9 +27,9 @@ module.exports = () => {
   var id, passwordAttempt, passwordsSame, editUserSuccesful, userData;
   app.post("/editUser", (req, res) => {
     id = req.body.id;
-    hashedPassword = getPasswordFromID(id);
+    hashedPassword = await getPasswordFromID(id);
     passwordAttempt = req.body.password;
-    passwordsSame = comparePasswords(passwordAttempt, hashedPassword);
+    passwordsSame = await comparePasswords(passwordAttempt, hashedPassword);
     if (passwordsSame) {
       userData = req.body;
       editUserSuccesful = await editUserAction(userData);
