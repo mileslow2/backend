@@ -10,19 +10,22 @@ function userInfoQuery(id) {
 }
 
 async function userInfoAction(query) {
+  var returnValue;
   await user
     .findOne(query)
     .catch(errorHandler)
     .then(data => {
-      return data;
+      if (data !== null) returnValue = data.dataValues;
+      else returnValue = null;
     });
+  return returnValue;
 }
 
 module.exports = app => {
   var query, userInfo;
   app.post("/getUserInfo", async (req, res) => {
     query = userInfoQuery(req.body.id);
-    userInfo = await userInfoAction(con, query);
+    userInfo = await userInfoAction(query);
     res.status(200).send(userInfo);
   });
 };

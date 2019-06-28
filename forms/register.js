@@ -10,15 +10,17 @@ function registerQuery(userData) {
 }
 
 async function registerUser(query) {
+  var returnVal;
   await user
     .create(query)
     .catch(err => {
-      if (err.message.substr(0, 6) === "ER_DUP") return false;
+      if (err.message.substr(0, 6) === "ER_DUP") returnVal = false;
       else errorHandler(err);
     })
     .then(() => {
-      return true;
+      returnVal = true;
     });
+  return returnVal;
 }
 
 module.exports = async app => {
@@ -28,7 +30,7 @@ module.exports = async app => {
     userData.password = await hashPassword(userData.password);
     query = registerQuery(userData);
     registerSuccesful = await registerUser(query);
-    if (registerSuccesful) res.status(201).send(true);
-    else res.status(201).send(true);
+    if (registerSuccesful) res.status(201).send("true");
+    else res.status(422).send("false");
   });
 };

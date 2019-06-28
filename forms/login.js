@@ -16,31 +16,36 @@ async function getUserData(query) {
     .findOne(query)
     .catch(errorHandler)
     .then(data => {
-      userData = data[0];
+      if (data !== null) userData = data.dataValues;
+      else userData = null;
     });
-  if (userData === undefined) userData.emailExists = false;
+  if (userData === null) userData = { emailExists: false };
   else userData.emailExists = true;
   return userData;
 }
 
-module.exports = app => {
+module.exports = async app => {
   var query,
     email,
     userData,
-    passwordsDifferent,
+    passwordsSame,
     passwordAttempt,
-    hashedPassword;
+    hashedPassword,
+    body;
   app.post("/login", async (req, res) => {
     email = req.body.email;
     query = userDataFromEmail(email);
     userData = await getUserData(query);
     passwordAttempt = req.body.password;
     hashedPassword = userData.password;
-    passwordsDifferent = await comparePasswords(
-      passwordAttempt,
-      hashedPassword
-    );
-    if (userData.emailExists || passwordsDifferent) res.status(422).send(false);
-    else res.status(200).send(true);
+    body = {};
+    if (userData.emailExists)
+      passwordsSame = await comparePasswords(passwordAttempt, hashedPassword);
+    body.verified = userData.emailExists && passwordsSame;
+    if (!body.verified) res.status(422).send(body);
+    else {
+      body.user_id = userData.user_id;
+      res.status(200).send(body);
+    }
   });
 };
