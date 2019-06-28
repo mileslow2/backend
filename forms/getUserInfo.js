@@ -13,8 +13,8 @@ async function userInfoAction(query) {
   await user
     .findOne(query)
     .catch(errorHandler)
-    .then(() => {
-      return true;
+    .then(data => {
+      return data;
     });
 }
 
