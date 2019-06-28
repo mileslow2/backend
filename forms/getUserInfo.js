@@ -5,7 +5,7 @@ function userInfoQuery(id) {
     where: {
       user_id: id
     },
-    attributes: ['full_name', 'email']
+    attributes: ["full_name", "email"]
   };
 }
 
@@ -18,9 +18,9 @@ async function userInfoAction(query) {
     });
 }
 
-module.exports = (app) => {
+module.exports = app => {
   var query, userInfo;
-  app.post("/getUserInfo", (req, res) => {
+  app.post("/getUserInfo", async (req, res) => {
     query = userInfoQuery(req.body.id);
     userInfo = await userInfoAction(con, query);
     res.status(200).send(userInfo);

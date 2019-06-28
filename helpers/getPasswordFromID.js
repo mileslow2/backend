@@ -8,7 +8,7 @@ function makeQuery(userID) {
   };
 }
 
-module.exports = userID => {
+module.exports = async userID => {
   var password;
   const query = makeQuery(userID);
   await user

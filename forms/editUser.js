@@ -25,7 +25,7 @@ async function editUserAction(userData) {
 
 module.exports = () => {
   var id, passwordAttempt, passwordsSame, editUserSuccesful, userData;
-  app.post("/editUser", (req, res) => {
+  app.post("/editUser", async (req, res) => {
     id = req.body.id;
     hashedPassword = await getPasswordFromID(id);
     passwordAttempt = req.body.password;

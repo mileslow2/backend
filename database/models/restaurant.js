@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const sequelize = require("../connect");
 
 module.exports = sequelize.define("restaurant", {
   restaurant_id: {

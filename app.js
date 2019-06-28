@@ -16,10 +16,7 @@ app.use(bodyParser.json());
 
 require("./database/connect");
 
-con.connect(function(err) {
-  if (err) throw err;
-  all(app, con);
-});
+all(app);
 
 app.use(function(err, req, res, next) {
   if (res.headersSent) {

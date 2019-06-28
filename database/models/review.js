@@ -1,3 +1,4 @@
+const sequelize = require("../connect");
 const Sequelize = require("sequelize");
 
 module.exports = sequelize.define("review", {
