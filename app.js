@@ -1,25 +1,22 @@
-const express = require("express");
+const app = require("express")();
+global.app = app;
+
 const bodyParser = require("body-parser");
-const mysql = require("mysql");
 const helmet = require("helmet");
-const app = express();
 const all = require("./forms/index");
 
-const config = {
-  host: "localhost",
-  user: "root",
-  password: "123",
-  database: "glutenMaps"
+const errorHandler = err => {
+  if (err) throw err;
 };
 
-const con = mysql.createConnection(config);
+global.errorHandler = errorHandler;
+
 app.use(helmet());
 app.use(bodyParser.json());
 
-con.connect(function(err) {
-  if (err) throw err;
-  all(app, con);
-});
+require("./database/connect");
+
+all(app);
 
 app.use(function(err, req, res, next) {
   if (res.headersSent) {

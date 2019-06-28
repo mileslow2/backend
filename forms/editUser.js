@@ -1,36 +1,38 @@
 const getPasswordFromID = require("../helpers/getPasswordFromID.js");
 const comparePasswords = require("../helpers/comparePasswords.js");
+const user = require("../database/models/user");
 
 function editUserQuery(userData) {
   return (
-    'UPDATE `user` SET `email`= "' +
-    userData.email +
-    '", `full_name`= "' +
-    userData.name +
-    '" WHERE `user_id` = "' +
-    userData.id +
-    '"'
+    { email: userData.email, full_name: userData.name },
+    {
+      where: {
+        user_id: userData.id
+      }
+    }
   );
 }
 
-function editUserAction(con, query) {
-  con.query(query, function(err, res) {
-    if (err) throw err;
-    return true;
-  });
+async function editUserAction(userData) {
+  const query = editUserQuery(userData);
+  await user
+    .update(query)
+    .catch(errorHandler)
+    .then(() => {
+      return true;
+    });
 }
 
-module.exports = (app, con) => {
+module.exports = () => {
   var id, passwordAttempt, passwordsSame, editUserSuccesful, userData;
-  app.post("/editUser", (req, res) => {
+  app.post("/editUser", async (req, res) => {
     id = req.body.id;
-    hashedPassword = getPasswordFromID(con, id);
+    hashedPassword = await getPasswordFromID(id);
     passwordAttempt = req.body.password;
-    passwordsSame = comparePasswords(passwordAttempt, hashedPassword);
+    passwordsSame = await comparePasswords(passwordAttempt, hashedPassword);
     if (passwordsSame) {
       userData = req.body;
-      query = editUserQuery(userData);
-      editUserSuccesful = editUserAction(con, query);
+      editUserSuccesful = await editUserAction(userData);
     }
     if (passwordsSame && editUserSuccesful) res.status(200).send(true);
     else res.status(422).send(false);

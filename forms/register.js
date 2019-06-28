@@ -1,33 +1,33 @@
 const hashPassword = require("../helpers/hashPassword");
+const user = require("../database/models/user");
 
 function registerQuery(userData) {
-  return (
-    'INSERT INTO `user` (`password`, `email`, `full_name`) VALUES  ("' +
-    userData.password +
-    '", "' +
-    userData.email +
-    '", "' +
-    userData.fullName +
-    '")'
-  );
+  return {
+    password: userData.password,
+    email: userData.email,
+    full_name: userData.fullName
+  };
 }
 
-function registerUser(con, query) {
-  con.query(query, function(err) {
-    if (err)
-      if (error.message.substr(0, 6) === "ER_DUP") return false;
-      else throw err;
-    return true;
-  });
+async function registerUser(query) {
+  await user
+    .create(query)
+    .catch(err => {
+      if (err.message.substr(0, 6) === "ER_DUP") return false;
+      else errorHandler(err);
+    })
+    .then(() => {
+      return true;
+    });
 }
 
-module.exports = (app, con) => {
+module.exports = async app => {
   var userData, query, registerSuccesful;
-  app.post("/register", (req, res) => {
+  app.post("/register", async (req, res) => {
     userData = req.body;
-    userData.password = hashPassword(userData.password);
+    userData.password = await hashPassword(userData.password);
     query = registerQuery(userData);
-    registerSuccesful = registerUser(con, query);
+    registerSuccesful = await registerUser(query);
     if (registerSuccesful) res.status(201).send(true);
     else res.status(201).send(true);
   });
