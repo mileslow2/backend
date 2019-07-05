@@ -14,7 +14,7 @@ async function registerUser(query) {
   await user
     .create(query)
     .catch(err => {
-      if (err.message.substr(0, 6) === "ER_DUP") returnVal = false;
+      if (err.message.substr(0, 6) === "Valida") returnVal = false;
       else errorHandler(err);
     })
     .then(() => {

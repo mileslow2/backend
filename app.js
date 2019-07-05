@@ -1,4 +1,6 @@
 const app = require("express")();
+const session = require("express-session");
+
 global.app = app;
 
 const bodyParser = require("body-parser");
@@ -10,6 +12,20 @@ const errorHandler = err => {
 };
 
 global.errorHandler = errorHandler;
+
+app.use(
+  session({
+    name: "gm",
+    secret: "idk what this does lol",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 80,
+      sameSite: true,
+      secure: true
+    }
+  })
+);
 
 app.use(helmet());
 app.use(bodyParser.json());

@@ -41,10 +41,17 @@ module.exports = async app => {
     body = {};
     if (userData.emailExists)
       passwordsSame = await comparePasswords(passwordAttempt, hashedPassword);
-    body.verified = userData.emailExists && passwordsSame;
+    body.verified = userData.emailExists && !passwordsSame;
     if (!body.verified) res.status(422).send(body);
     else {
       body.user_id = userData.user_id;
+      // req.session.password = passwordAttempt;
+      // req.session.email = email;
+      console.log("====================================");
+      console.log(typeof body.verified);
+      console.log(typeof body.user_id);
+      console.log(typeof JSON.stringify(body));
+      console.log("====================================");
       res.status(200).send(body);
     }
   });
