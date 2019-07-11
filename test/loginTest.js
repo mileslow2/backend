@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const easyFetch = require("../helpers/easyFetch");
+const easyFetch = require("../src/helpers/easyFetch");
 const loginURL = "http://Miless-MacBook-Pro.local:8081/login";
 
 describe("login", function()
@@ -41,5 +41,11 @@ describe("login", function()
             verified: false
         };
         expect(expectedResponse).to.deep.equal(response);
+    });
+    it("should not login because of bad request", async function()
+    {
+        const userData = {};
+        const response = await easyFetch(loginURL, userData);
+        expect(response).to.deep.equal(false);
     });
 });

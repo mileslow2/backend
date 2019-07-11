@@ -1,5 +1,6 @@
 const hashPassword = require("../helpers/hashPassword");
 const user = require("../database/models/user");
+const defense = require("../security/basicDefense");
 
 function registerQuery(userData)
 {
@@ -41,6 +42,7 @@ module.exports = async app =>
     var userData, query, registerSuccesful;
     app.post("/register", async (req, res) =>
     {
+        defense(req, res);
         userData = req.body;
         userData.password = await hashPassword(userData.password);
         query = registerQuery(userData);

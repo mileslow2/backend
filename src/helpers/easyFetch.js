@@ -8,7 +8,7 @@ function checkIfDefined(response)
 
 module.exports = async (url, body) =>
 {
-    var res, responseDefined;
+    var res;
     body = JSON.stringify(body);
     await fetch(url,
         {
