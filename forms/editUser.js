@@ -4,7 +4,7 @@ const user = require("../database/models/user");
 
 function editUserQuery(userData) {
 	return (
-		{ email: userData.email, full_name: userData.name },
+		{ email: userData.email, first_name: userData.name },
 		{
 			where: {
 				user_id: userData.id
