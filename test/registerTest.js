@@ -92,8 +92,8 @@ describe("register", function()
         const newUser = {
             password: "123",
             email: "mileslow2@gmail.com",
-            foo: "Miles",
-            last_name: "Low"
+            foo: "miles",
+            last_name: "low"
         };
         const response = await easyFetch(registerURL, newUser);
         expect(response).to.be.equal(false);

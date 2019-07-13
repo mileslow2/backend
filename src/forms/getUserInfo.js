@@ -1,5 +1,5 @@
 const user = require("../database/models/user");
-const defense = require("../security/basicDefense");
+const usedDefense = require("../security/basicDefense");
 
 function userInfoQuery(id)
 {
@@ -20,21 +20,18 @@ async function userInfoAction(query)
         .catch(errorHandler)
         .then(data =>
         {
-            if (data !== null) returnValue = data.dataValues;
-            else returnValue = null;
+            if (data == null) returnValue = false;
+            else returnValue = data.dataValues;
         });
     return returnValue;
 }
-// @TODO make res.end stop a response;
 module.exports = app =>
 {
-    var query, userInfo, id;
+    var query, userInfo;
     app.post("/getUserInfo", async (req, res) =>
     {
-        id = req.body.id;
-        defense(req, res);
-        if (id === undefined || typeof id !== "string") res.status(400).end("false")
-        query = userInfoQuery(id);
+        if (usedDefense(req, res)) return;
+        query = userInfoQuery(req.body.id);
         userInfo = await userInfoAction(query);
         userInfo = JSON.stringify(userInfo);
         res.status(200).end(userInfo);

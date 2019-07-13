@@ -1,6 +1,7 @@
 const expect = require("chai").expect;
 const easyFetch = require("../src/helpers/easyFetch");
 const URL = "http://Miless-MacBook-Pro.local:8081/getUserInfo";
+const user = require("../src/database/models/user");
 
 describe("get user info", function()
 {
@@ -11,11 +12,11 @@ describe("get user info", function()
         }
         const res = await easyFetch(URL, body);
         const expectedRes = {
-            email: "mileslow2@gmail.com",
-            first_name: "miles low",
-            last_name: ""
+            email: "mileslow3@gmail.com",
+            first_name: "miles",
+            last_name: "low"
         }
-        expect(expectedRes).to.deep.equal(res);
+        expect(res).to.deep.equal(expectedRes);
     })
     it("shouldn't get user info because of bad id", async function()
     {
@@ -28,17 +29,14 @@ describe("get user info", function()
     })
     it("shouldn't get user info because of invalid request", async function()
     {
-        const body = "foo"
-        const res = await easyFetch(URL, body);
-        const expectedRes = false;
-        expect(expectedRes).to.be.equal(res);
+        const res = await easyFetch(URL, "foo");
+        expect(res).to.be.equal(false);
     })
     it("shouldn't get user info because of invalid request", async function()
     {
-        const body = {}
-        const res = await easyFetch(URL, body);
-        const expectedRes = false;
-        expect(expectedRes).to.be.equal(res);
+        const invalidBody = {};
+        const res = await easyFetch(URL, invalidBody);
+        expect(res).to.be.equal(false);
     })
     it("shouldn't get user info because of invalid request", async function()
     {
@@ -47,6 +45,6 @@ describe("get user info", function()
         }
         const res = await easyFetch(URL, body);
         const expectedRes = false;
-        expect(expectedRes).to.be.equal(res);
+        expect(res).to.be.equal(expectedRes);
     })
 })

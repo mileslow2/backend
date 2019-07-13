@@ -16,10 +16,11 @@ module.exports = async userID =>
     const query = makeQuery(userID);
     await user
         .findAll(query)
-        .catch(errorHandler)
+        .catch(err => (console.log(err.message)))
         .then(res =>
         {
-            password = res[0].password;
+            if (res[0] != undefined)
+                password = res[0].password;
         });
     return password;
 };

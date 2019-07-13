@@ -15,5 +15,12 @@ function isBad(obj) // change the name
 module.exports = (req, res) =>
 {
     if (isBad(req.body))
+    {
+        console.log('====================================');
+        console.log("hello");
+        console.log('====================================');
         res.status(400).end("false");
+        return true;
+    }
+    return false;
 }

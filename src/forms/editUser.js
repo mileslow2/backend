@@ -1,51 +1,49 @@
 const getPasswordFrom = require("../helpers/getPasswordFrom.js");
 const comparePasswords = require("../helpers/comparePasswords.js");
 const user = require("../database/models/user");
-const defense = require("../security/basicDefense");
+const usedDefense = require("../security/basicDefense");
+const checkIfNotObj = require("../security/checkIfNotObj");
 
-function editUserQuery(userData)
+async function editUserAction(body)
 {
-    return (
-    {
-        email: userData.email,
-        first_name: userData.name
-    },
-    {
+    const selector = {
         where:
         {
-            user_id: userData.id
+            user_id: body.id
         }
-    });
-}
-
-async function editUserAction(userData)
-{
-    const query = editUserQuery(userData);
+    }
+    const valuesToSelect = {
+        email: body.email,
+        first_name: body.first_name,
+        last_name: body.last_name
+    }
+    var returnVal = false;
     await user
-        .update(query)
+        .update(valuesToSelect, selector)
         .catch(errorHandler)
-        .then(() =>
+        .then(res =>
         {
-            return true;
+            returnVal = true;
         });
+    return returnVal;
 }
 
 module.exports = () =>
 {
-    var id, passwordAttempt, passwordsSame, editUserSuccesful, userData;
+    const editUserKeys = ["id", "email", "first_name", "last_name", "password"]
+    var passwordAttempt, passwordsSame, editUserSuccesful, badReq, bodyHasWrongKeys;
     app.post("/editUser", async (req, res) =>
     {
-        defense(req, res);
-        id = req.body.id;
-        hashedPassword = await getPasswordFrom(id);
+        badReq = usedDefense(req, res);
+        if (!badReq) bodyHasWrongKeys = checkIfNotObj(editUserKeys, req, res);
+        if (badReq || bodyHasWrongKeys) return;
+        hashedPassword = await getPasswordFrom(req.body.id);
+        if (hashedPassword == undefined)
+            res.status(422).send("false");
         passwordAttempt = req.body.password;
         passwordsSame = await comparePasswords(passwordAttempt, hashedPassword);
-        if (passwordsSame)
-        {
-            userData = req.body;
-            editUserSuccesful = await editUserAction(userData);
-        }
-        if (passwordsSame && editUserSuccesful) res.status(200).send(true);
-        else res.status(422).send(false);
+        if (passwordsSame) editUserSuccesful = await editUserAction(req.body);
+        if (passwordsSame && editUserSuccesful) res.status(200).send("true");
+        else res.status(422).send("false");
     });
 };

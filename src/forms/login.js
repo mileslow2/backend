@@ -1,6 +1,6 @@
 const comparePasswords = require("../helpers/comparePasswords");
 const user = require("../database/models/user");
-const defense = require("../security/basicDefense");
+const usedDefense = require("../security/basicDefense");
 
 function userDataFrom(email)
 {
@@ -42,7 +42,7 @@ module.exports = async app =>
         body;
     app.post("/login", async (req, res) =>
     {
-        defense(req, res);
+        if (usedDefense(req, res)) return;
         body = {};
         email = req.body.email;
         query = userDataFrom(email);
