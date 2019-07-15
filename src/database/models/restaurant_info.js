@@ -5,15 +5,19 @@ module.exports = sequelize.define("restaurant_info",
 {
     restaurant_id:
     {
-        type: Sequelize.STRING(45),
-        allowNull: false,
-        primaryKey: true,
-        unique: true
+        type: Sequelize.INTEGER(11),
+        unique: true,
+        primarykey: false,
+        references:
+        {
+            model: 'restaurants',
+            key: 'restaurant_id'
+        },
     },
     description:
     {
         type: Sequelize.STRING(130),
-        allowNull: false
+        allowNull: true
     },
     average:
     {
@@ -33,6 +37,10 @@ module.exports = sequelize.define("restaurant_info",
     restaurant_hours:
     {
         type: Sequelize.INTEGER(12)
+    },
+    google_maps_id:
+    {
+        type: Sequelize.STRING(200),
+        allowNull: false
     }
-
 });

@@ -1,15 +1,15 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../connect");
 
-module.exports = sequelize.define("restaurant_marker",
+module.exports = sequelize.define("restaurants",
 {
     restaurant_id:
     {
         type: Sequelize.INTEGER(11),
-        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         unique: true
+
     },
     lat:
     {
@@ -23,5 +23,10 @@ module.exports = sequelize.define("restaurant_marker",
         allowNull: false,
         unique: true
     },
-
+    name:
+    {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+        unique: false
+    }
 })
