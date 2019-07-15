@@ -39,7 +39,10 @@ module.exports = () =>
         if (badReq || bodyHasWrongKeys) return;
         hashedPassword = await getPasswordFrom(req.body.id);
         if (hashedPassword == undefined)
+        {
             res.status(422).send("false");
+            return;
+        }
         passwordAttempt = req.body.password;
         passwordsSame = await comparePasswords(passwordAttempt, hashedPassword);
         if (passwordsSame) editUserSuccesful = await editUserAction(req.body);
