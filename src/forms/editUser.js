@@ -28,7 +28,7 @@ async function editUserAction(body)
     return returnVal;
 }
 
-module.exports = () =>
+module.exports = app =>
 {
     const editUserKeys = ["id", "email", "first_name", "last_name", "password"]
     var passwordAttempt, passwordsSame, editUserSuccesful, badReq, bodyHasWrongKeys;
