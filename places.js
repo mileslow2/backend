@@ -1,17 +1,17 @@
-const fetch = require('node-fetch')
-const addMarker = require('./src/helpers/addMarker')
+const fetch = require('node-fetch');
+const addMarker = require('./src/helpers/getRestaurants/addMarker');
 
 function makeParam(param, value)
 {
     return param + "=" + value + "&";
 }
 
-function getEightDigits(int)
+function removeDigits(decimal, finalLength)
 {
-    int = parseInt(int.toString().replace(".", ""));
-    while (int.toString().length > 9)
-        int = Math.round(int / 9);
-    return int;
+    var str = decimal.toString()
+    while (str.length > finalLength)
+        str = str.substr(0, str.length - 1);
+    return str;
 }
 
 
@@ -44,8 +44,8 @@ async function run()
             {
                 c = res.results[i];
                 data = {
-                    lat: getEightDigits(c.geometry.location.lat),
-                    lng: getEightDigits(c.geometry.location.lng),
+                    lat: removeDigits(c.geometry.location.lat, 10),
+                    lng: removeDigits(c.geometry.location.lng, 11),
                     address: c.formatted_address,
                     name: c.name,
                     google_maps_id: c.place_id
