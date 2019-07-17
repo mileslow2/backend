@@ -2,7 +2,7 @@ const expect = require("chai").expect;
 const easyFetch = require("../src/helpers/easyFetch");
 const url = "http://Miless-MacBook-Pro.local:8081/getPlaceInfo";
 
-describe("login", function()
+describe("get place info", function()
 {
     it("should get the right place info", async function()
     {
