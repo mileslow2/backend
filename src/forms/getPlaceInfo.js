@@ -8,7 +8,7 @@ function infoQuery(restaurant_id)
         {
             restaurant_id
         },
-        attributes: ["description", "average", "address", "phone_number", "restaurant_hours", "google_maps_id"]
+        attributes: ["description", "address", "phone_number", "restaurant_hours", "google_maps_id"]
     };
 }
 async function getPlaceInfo(restaurant_id)
@@ -21,9 +21,6 @@ async function getPlaceInfo(restaurant_id)
         .then(results =>
         {
             info = results.dataValues;
-            console.log('====================================');
-            console.log(info);
-            console.log('====================================');
         })
     return info;
 }

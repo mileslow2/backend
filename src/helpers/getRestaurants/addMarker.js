@@ -1,5 +1,5 @@
-const restaurant_markers = require("../database/models/restaurants");
-const sequelize = require("../database/connect");
+const restaurants = require("../../database/models/restaurants");
+const sequelize = require("../../database/connect");
 
 async function newMarker(data)
 {
@@ -9,7 +9,7 @@ async function newMarker(data)
         name: data.name
     }
     var restaurant_id;
-    await restaurant_markers
+    await restaurants
         .create(marker)
         .catch(err =>
         {

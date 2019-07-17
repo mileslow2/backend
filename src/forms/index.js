@@ -2,7 +2,7 @@ const editUser = require("./editUser");
 const register = require("./register");
 const login = require("./login");
 const getUserInfo = require("./getUserInfo");
-const getPlaces = require('./getPlaces');
+const getPlaces = require('./getRestaurants');
 const getPlaceInfo = require('./getPlaceInfo');
 module.exports = app =>
 {
