@@ -13,13 +13,13 @@ module.exports = sequelize.define("restaurants",
     },
     lat:
     {
-        type: Sequelize.INTEGER(8),
+        type: Sequelize.DECIMAL(10, 8),
         allowNull: false,
         unique: true
     },
     lng:
     {
-        type: Sequelize.INTEGER(8),
+        type: Sequelize.DECIMAL(11, 8),
         allowNull: false,
         unique: true
     },
@@ -28,5 +28,12 @@ module.exports = sequelize.define("restaurants",
         type: Sequelize.STRING(100),
         allowNull: false,
         unique: false
+    },
+    average:
+    {
+        type: Sequelize.TINYINT(4),
+        allowNull: true,
+        unique: false
     }
+
 })
