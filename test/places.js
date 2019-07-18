@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const addMarker = require('./src/helpers/getRestaurants/addMarker');
+const addMarker = require('../src/helpers/getRestaurants/addMarker');
 
 function makeParam(param, value)
 {

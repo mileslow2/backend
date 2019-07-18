@@ -27,12 +27,13 @@ module.exports = async app =>
         loc = req.body;
         nearbyPlaces = await getNearbyPlaces(loc);
         nearbyPlaces = JSON.stringify(nearbyPlaces);
-        if (nearbyPlaces.length < 14)
+        if (nearbyPlaces.length < 15)
         {
             newPlaces = await getNewPlaces(loc);
             nearbyPlaces = nearbyPlaces.concat(newPlaces);
+            nearbyPlaces = JSON.stringify(nearbyPlaces);
             res.status(200).end(nearbyPlaces);
-            await addNewPlaces(newPlaces);
+            await addNewPlaces(newPlaces, loc);
         }
         else res.status(200).end(nearbyPlaces);
     })
