@@ -1,8 +1,8 @@
 const getPasswordFrom = require("../helpers/getPasswordFrom.js");
 const comparePasswords = require("../helpers/comparePasswords.js");
 const user = require("../database/models/user");
-const usedDefense = require("../security/basicDefense");
-const checkIfNotObj = require("../security/checkIfNotObj");
+const usedDefense = require("../security");
+
 
 async function editUserAction(body)
 {
@@ -31,12 +31,11 @@ async function editUserAction(body)
 module.exports = app =>
 {
     const editUserKeys = ["id", "email", "first_name", "last_name", "password"]
-    var passwordAttempt, passwordsSame, editUserSuccesful, badReq, bodyHasWrongKeys;
+    var passwordAttempt, passwordsSame, editUserSuccesful, badReq;
     app.post("/editUser", async (req, res) =>
     {
-        badReq = usedDefense(req, res);
-        if (!badReq) bodyHasWrongKeys = checkIfNotObj(editUserKeys, req, res);
-        if (badReq || bodyHasWrongKeys) return;
+        badReq = usedDefense(req, res, editUserKeys);
+        if (badReq) return;
         hashedPassword = await getPasswordFrom(req.body.id);
         if (hashedPassword == undefined)
         {

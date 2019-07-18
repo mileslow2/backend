@@ -1,5 +1,5 @@
 const restaurant_info = require("../database/models/restaurant_info");
-
+const usedDefense = require("../security");
 
 function infoQuery(restaurant_id)
 {
@@ -36,9 +36,11 @@ async function getMissingInfo(googleMapsID)
 
 module.exports = async app =>
 {
+    const placeInfoKeys = ["id"]
     var info, extraInfo;
     app.post("/getPlaceInfo", async (req, res) =>
     {
+        if (usedDefense(req, res, placeInfoKeys)) return;
         info = await getPlaceInfo(req.body.id);
         // if (info["restaurant_hours"] == null)
         // {

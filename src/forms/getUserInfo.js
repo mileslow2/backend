@@ -1,5 +1,5 @@
 const user = require("../database/models/user");
-const usedDefense = require("../security/basicDefense");
+const usedDefense = require("../security");
 
 function userInfoQuery(id)
 {
@@ -27,10 +27,11 @@ async function userInfoAction(query)
 }
 module.exports = app =>
 {
+    const keys = ["id"];
     var query, userInfo;
     app.post("/getUserInfo", async (req, res) =>
     {
-        if (usedDefense(req, res)) return;
+        if (usedDefense(req, res, keys)) return;
         query = userInfoQuery(req.body.id);
         userInfo = await userInfoAction(query);
         userInfo = JSON.stringify(userInfo);
