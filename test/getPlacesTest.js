@@ -42,8 +42,8 @@ function removeID(placeList)
 describe('get places', function()
 {
     const loc = {
-        lat: changeDecimal(41.02444533642552, 8),
-        lng: changeDecimal(-72.48165236616808, 8)
+        lat: changeDecimal(41.02444533642552, 8) + "",
+        lng: changeDecimal(-72.48165236616808, 8) + ""
     }
 
     it("should get places from db", async function()

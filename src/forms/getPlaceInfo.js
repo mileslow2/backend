@@ -20,7 +20,10 @@ async function getPlaceInfo(restaurant_id)
         .catch(errorHandler)
         .then(results =>
         {
-            info = results.dataValues;
+            if (results == null)
+                info = null;
+            else
+                info = results.dataValues;
         })
     return info;
 }
@@ -42,6 +45,11 @@ module.exports = async app =>
     {
         if (usedDefense(req, res, placeInfoKeys)) return;
         info = await getPlaceInfo(req.body.id);
+        if (info == null)
+        {
+            res.status(200).send("false");
+            return;
+        }
         // if (info["restaurant_hours"] == null)
         // {
         //     extraInfo = await getMissingInfo(info.google_maps_id);
