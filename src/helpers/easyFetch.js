@@ -10,15 +10,16 @@ module.exports = async (url, body) =>
 {
     var res;
     body = JSON.stringify(body);
+    const headers = {
+        "Content-Type": "application/json"
+    }
     await fetch(url,
         {
             method: "POST",
             body,
-            headers:
-            {
-                "Content-Type": "application/json"
-            }
+            headers
         })
+        .catch(err => console.log(err.message))
         .then(response => response.json())
         .then(response => (res = response));
     return res;

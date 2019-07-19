@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const easyFetch = require("../src/helpers/easyFetch");
+const easyFetch = require("../../src/helpers/easyFetch");
 const loginURL = "http://Miless-MacBook-Pro.local:8081/login";
 
 describe("login", function()

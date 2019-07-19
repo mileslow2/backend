@@ -1,7 +1,7 @@
 const hashPassword = require("../helpers/hashPassword");
 const user = require("../database/models/user");
-const usedDefense = require("../security/basicDefense");
-const checkIfNotObj = require("../security/checkIfNotObj");
+const usedDefense = require("../security");
+
 
 function registerQuery(userData)
 {
@@ -41,11 +41,10 @@ async function registerUser(query)
 module.exports = async app =>
 {
     var userData, query, registerSuccesful, badReq, reqHasWrongKeys;
-    const userKeys = ["password", "email", "first_name", "last_name"];
+    const keys = ["password", "email", "first_name", "last_name"];
     app.post("/register", async (req, res) =>
     {
-        badReq = usedDefense(req, res);
-        reqHasWrongKeys = checkIfNotObj(userKeys, req, res);
+        if (usedDefense(req, res, keys)) return;
         if (badReq || reqHasWrongKeys) return;
         userData = req.body;
         userData.password = await hashPassword(userData.password);

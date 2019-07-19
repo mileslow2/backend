@@ -1,9 +1,7 @@
 const app = require("express")();
-global.app = app;
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const all = require("./src/forms/index");
-
 const errorHandler = err =>
 {
     if (err) throw err.message;
@@ -14,7 +12,6 @@ app.use(helmet());
 app.use(bodyParser.json());
 
 require("./src/database/connect"); // adds the db to sequelize
-
 all(app);
 
 

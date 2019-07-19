@@ -1,8 +1,8 @@
 const expect = require("chai").expect;
-const easyFetch = require("../src/helpers/easyFetch");
+const easyFetch = require("../../src/helpers/easyFetch");
 const registerURL = "http://Miless-MacBook-Pro.local:8081/register";
-const comparePasswords = require("../src/helpers/comparePasswords");
-const user = require("../src/database/models/user");
+const comparePasswords = require("../../src/helpers/comparePasswords");
+const user = require("../../src/database/models/user");
 
 const errorHandler = err =>
 {
