@@ -20,7 +20,7 @@ async function getNearbyPlaces(loc)
     var nearbyPlaces = nearbyPlacesQuery(loc);
     await sequelize
         .query(nearbyPlaces)
-        .catch(errorHandler)
+        .catch(err => (console.log(err.message)))
         .then(res =>
         {
             nearbyPlaces = res[0];
@@ -28,26 +28,57 @@ async function getNearbyPlaces(loc)
     return nearbyPlaces;
 }
 
-function closeEnough(a, b)
-{
-    return (a - 1 == b || b - 1 == a);
-}
-
 describe('get places', function()
 {
-    const loc = {
-        lat: changeDecimal(41.02444533642552, 8) + "",
-        lng: changeDecimal(-72.48165236616808, 8) + ""
-    }
+
+
     it("should get places from Google Maps and add them to DB", async function()
     {
         await deletePlaces();
+        const loc = {
+            lat: 41.02444534,
+            lng: -72.48165237
+        }
+        var placesFromDB = await getNearbyPlaces(loc);
+        expect(0).to.be.equal(placesFromDB.length);
         const res = await fetch(url, loc);
         expect(12).to.be.lessThan(res.length);
+        await setTimeout(async () =>
+        {
+            placesFromDB = await getNearbyPlaces(loc);
+            expect(12).to.be.lessThan(placesFromDB.length);
+        }, 1000)
+
+
     })
     it("should get places from db", async function()
     {
+        const loc = {
+            lat: 41.02444534,
+            lng: -72.48165237
+        }
+        loc.lat = loc.lat.toString();
+        loc.lng = loc.lng.toString();
         const res = await fetch(url, loc);
         expect(13).to.be.lessThan(res.length);
     });
+    it("should not get any places because of crazy locations", async function()
+    {
+        const crazyLoc = {
+            lat: "742.4343243442421421434134",
+            lng: "742.4343243442421421434134"
+        }
+        const res = await fetch(url, crazyLoc);
+        expect(false).to.be.equal(res);
+
+    })
+    it("should not get any places because of bad location object", async function()
+    {
+        const crazyLoc = {
+            lat: "foo",
+            lng: "742.4343243442421421434134"
+        }
+        const res = await fetch(url, crazyLoc);
+        expect(false).to.be.equal(res);
+    })
 });
