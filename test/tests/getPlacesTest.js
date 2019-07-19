@@ -39,16 +39,15 @@ describe('get places', function()
         lat: changeDecimal(41.02444533642552, 8) + "",
         lng: changeDecimal(-72.48165236616808, 8) + ""
     }
-
-    it.only("should get places from db", async function()
-    {
-        const res = await fetch(url, loc);
-        expect(true).to.be.equal(closeEnough(nearbyPlaces.length, res.length));
-    });
     it("should get places from Google Maps and add them to DB", async function()
     {
         await deletePlaces();
         const res = await fetch(url, loc);
-        expect(true).to.be.equal(closeEnough(nearbyPlaces.length, res.length));
+        expect(12).to.be.lessThan(res.length);
     })
+    it("should get places from db", async function()
+    {
+        const res = await fetch(url, loc);
+        expect(13).to.be.lessThan(res.length);
+    });
 });

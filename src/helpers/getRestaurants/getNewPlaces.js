@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const addRestaurant = require('./addMarker');
+const addRestaurant = require('./addPlace');
 const changeDecimals = require('./changeDecimals')
 
 function makeParam(param, value)
@@ -23,24 +23,6 @@ function makeURL(loc)
     return googleMapRequest
 }
 
-function removeUnnecessaryInfo(places)
-{
-    for (var i = 0; i < places.length; i++)
-    {
-        delete places[i].plus_code;
-        delete places[i].price_level;
-        delete places[i].types;
-        delete places[i].icon;
-        delete places[i].user_ratings_total;
-        delete places[i].photos[0].html_attributions;
-        delete places[i].photos[0].height;
-        delete places[i].photos[0].width;
-        delete places[i].geometry.viewport;
-        delete places[i].geometry.southwest;
-    }
-    return places;
-}
-
 module.exports = async loc =>
 {
     const url = makeURL(loc);
@@ -51,6 +33,5 @@ module.exports = async loc =>
         {
             newPlaces = res;
         });
-    newPlaces = removeUnnecessaryInfo(newPlaces);
     return newPlaces;
 }

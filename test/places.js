@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const addMarker = require('../src/helpers/getRestaurants/addMarker');
+const addPlace = require('../src/helpers/getRestaurants/addPlace');
 
 function makeParam(param, value)
 {
@@ -50,7 +50,7 @@ async function run()
                     name: c.name,
                     google_maps_id: c.place_id
                 }
-                await addMarker(data);
+                await addPlace(data);
             }
         });
 }

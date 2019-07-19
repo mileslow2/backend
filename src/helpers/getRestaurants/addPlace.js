@@ -3,8 +3,11 @@ const sequelize = require("../../database/connect");
 
 async function newMarker(data)
 {
-    var marker = data.geometry.location;
-    marker.name = data.name;
+    const marker = {
+        lat: data.lat,
+        lng: data.lng,
+        name: data.name
+    }
     var restaurant_id;
     await restaurants
         .create(marker)

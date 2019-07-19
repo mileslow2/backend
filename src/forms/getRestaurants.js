@@ -33,7 +33,7 @@ module.exports = async app =>
             nearbyPlaces = nearbyPlaces.concat(newPlaces);
             nearbyPlaces = JSON.stringify(nearbyPlaces);
             res.status(200).end(nearbyPlaces);
-            await addNewPlaces(newPlaces, loc);
+            // await addNewPlaces(newPlaces, loc);
         }
         else res.status(200).end(nearbyPlaces);
     })
