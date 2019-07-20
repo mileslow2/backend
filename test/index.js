@@ -1,3 +1,4 @@
-require('./user');
+// require('./user');
 // require('./place');
-require('./loginSignup');
+// require('./loginSignup');
+require('./review');

@@ -1,7 +1,7 @@
 const expect = require("chai").expect;
 const easyFetch = require("../../src/helpers/easyFetch");
 const url = "http://Miless-MacBook-Pro.local:8081/getPlaceInfo";
-const getUserID = require("../helpers/getPlaceInfo");
+const getPlaceID = require("../helpers/getPlaceID");
 describe("get place info", function()
 {
     it("should get the right place info", async function()
@@ -10,7 +10,7 @@ describe("get place info", function()
             google_maps_id: "ChIJ164AL6fy6IkRIVz6x2wafWk",
             address: "9 Ponquogue Ave, Hampton Bays, NY 11946, USA",
         };
-        const id = await getUserID(expectedResponse.google_maps_id) + "";
+        const id = await getPlaceID(expectedResponse.google_maps_id) + "";
         const body = {
             id
         };
