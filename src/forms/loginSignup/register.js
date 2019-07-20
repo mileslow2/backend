@@ -1,6 +1,6 @@
-const hashPassword = require("../helpers/hashPassword");
-const user = require("../database/models/user");
-const usedDefense = require("../security");
+const hashPassword = require("../../helpers/hashPassword");
+const user = require("../../database/models/user");
+const usedDefense = require("../../security");
 
 
 function registerQuery(userData)

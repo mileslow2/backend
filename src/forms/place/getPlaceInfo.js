@@ -1,5 +1,5 @@
-const restaurant_info = require("../database/models/restaurant_info");
-const usedDefense = require("../security");
+const restaurant_info = require("../../database/models/restaurant_info");
+const usedDefense = require("../../security");
 
 function infoQuery(restaurant_id)
 {

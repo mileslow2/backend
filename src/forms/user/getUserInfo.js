@@ -1,5 +1,5 @@
-const user = require("../database/models/user");
-const usedDefense = require("../security");
+const user = require("../../database/models/user");
+const usedDefense = require("../../security");
 
 function userInfoQuery(id)
 {
