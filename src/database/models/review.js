@@ -26,5 +26,10 @@ module.exports = sequelize.define("review",
         type: Sequelize.STRING(45),
         allowNull: false,
         unique: true
+    },
+    first_name:
+    {
+        type: Sequelize.STRING(30),
+        allowNull: false
     }
 });

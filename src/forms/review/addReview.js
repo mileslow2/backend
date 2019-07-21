@@ -3,14 +3,10 @@ const review = require('../../database/models/review');
 
 async function addReview(reviewBody)
 {
-    let worked = false;
+    let worked = true;
     await review
         .create(reviewBody)
-        .catch(err => (console.log(err.message)))
-        .then(res =>
-        {
-            if (typeof res == "object") worked = true
-        })
+        .catch(err => (worked = false))
     return worked;
 }
 
@@ -23,6 +19,7 @@ module.exports = app =>
         if (usedDefense(req, res, keys)) return;
         reviewAdded = await addReview(req.body);
         statusCode = reviewAdded ? 200 : 400;
+        reviewAdded = reviewAdded.toString();
         res.status(statusCode).end(reviewAdded);
     });
 }
