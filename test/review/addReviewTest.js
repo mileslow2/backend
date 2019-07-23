@@ -1,19 +1,8 @@
 const expect = require("chai").expect;
 const getPlaceID = require('../helpers/getPlaceID');
 const fetch = require('../../src/helpers/easyFetch');
-const review = require('../../src/database/models/review');
 const url = "http://Miless-MacBook-Pro.local:8081/addReview";
-
-async function deleteReview(user_id)
-{
-    const query = {
-        where:
-        {
-            user_id
-        }
-    };
-    await review.destroy(query);
-}
+const deleteReview = require('./util/deleteReview');
 
 describe('add review', () =>
 {
@@ -61,6 +50,5 @@ describe('add review', () =>
         }
         const res = await fetch(url, review);
         expect(false).to.be.equal(res);
-        // await deleteReview(review.user_id);
     });
 })

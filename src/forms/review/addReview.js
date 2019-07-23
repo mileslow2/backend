@@ -1,12 +1,19 @@
 const usedDefense = require("../../security");
 const review = require('../../database/models/review');
+const alterReview = require('./util/alterReview');
 
 async function addReview(reviewBody)
 {
     let worked = true;
     await review
         .create(reviewBody)
-        .catch(err => (worked = false))
+        .catch(async err =>
+        {
+            if (err.message == "Validation error")
+                worked = await alterReview(reviewBody);
+            else
+                worked = false
+        })
     return worked;
 }
 
