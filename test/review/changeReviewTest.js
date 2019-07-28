@@ -1,4 +1,5 @@
 const expect = require("chai").expect;
+const review = require('../../src/database/models/review');
 const getPlaceID = require('../helpers/getPlaceID');
 const fetch = require('../../src/helpers/easyFetch');
 const url = "http://Miless-MacBook-Pro.local:8081/addReview";
@@ -13,10 +14,22 @@ async function getReview(restaurant_id)
             restaurant_id
         }
     };
-    return review
+    let reviewFromDB;
+    await
+    review
         .findOne(findOne)
-        .catch(errorHandler)
-        .dataValues;
+        .catch((err) =>
+        {
+            console.log(err);
+        }).then(res => (reviewFromDB = res.dataValues));
+    return reviewFromDB;
+}
+
+function turnKeysToString(obj)
+{
+    for (var key in obj)
+        if (typeof obj[key] != "string")
+            obj[key] = obj[key].toString();
 }
 
 describe('add review', () =>
@@ -37,8 +50,9 @@ describe('add review', () =>
         expect(true).to.be.equal(res);
         review.body = "test test test";
         await fetch(url, review);
-        const reviewFromDB = await getReview(restaurant_id);
-        expect(review).to.deep.equal(reviewFromDB);
-        await deleteReview(user_id)
+        let reviewFromDB = await getReview(restaurant_id);
+        turnKeysToString(reviewFromDB);
+        expect(reviewFromDB).to.deep.equal(review);
+        await deleteReview("14")
     });
 })

@@ -5,7 +5,7 @@ module.exports = sequelize.define("review",
 {
     stars:
     {
-        type: Sequelize.TINYINT(4),
+        type: Sequelize.DECIMAL(2, 1),
         allowNull: false,
         primaryKey: true,
         defaultValue: true,
