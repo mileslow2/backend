@@ -12,9 +12,6 @@ module.exports = async reviewBody =>
     };
     delete reviewBody.user_id;
     delete reviewBody.restaurant_id;
-    console.log('====================================');
-    console.log(reviewBody);
-    console.log('====================================');
     const valuesToChange =
         await review
         .update(reviewBody, selector)

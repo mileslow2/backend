@@ -9,9 +9,6 @@ async function addReview(reviewBody)
         .create(reviewBody)
         .catch(async err =>
         {
-            console.log('====================================');
-            console.log(err);
-            console.log('====================================');
             if (err.message == "Validation error")
                 worked = await alterReview(reviewBody);
             else
