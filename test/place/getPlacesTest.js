@@ -47,7 +47,7 @@ describe('get places', function()
         {
             placesFromDB = await getNearbyPlaces(loc);
             expect(12).to.be.lessThan(placesFromDB.length);
-        }, 1000)
+        }, 1000);
 
 
     })

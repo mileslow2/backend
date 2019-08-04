@@ -7,10 +7,10 @@ const deleteReview = require('./util/deleteReview');
 
 async function populate()
 {
-    let google_maps_id = "ChIJ6cIVzBmWwoARhSdO0XcmXdk";
+    let google_maps_id = "ChIJcaqDn7-6woARNn2eauKOKSc";
     let restaurant_id = await getPlaceID(google_maps_id);
     restaurant_id = restaurant_id.toString();
-    google_maps_id = "ChIJn5JcY0i7woAR0etz7gkE5ag";
+    google_maps_id = "ChIJxS6RQ466woARryN0C786MwI";
     restaurant_id = await getPlaceID(google_maps_id);
     restaurant_id = restaurant_id.toString();
     await addReview("14", restaurant_id);

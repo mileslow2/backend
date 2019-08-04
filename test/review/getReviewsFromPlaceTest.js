@@ -15,7 +15,7 @@ describe('Get all reviews from a specific place', function()
 {
     it('should get all reviews from a restaurant_id', async function()
     {
-        const google_maps_id = "ChIJ6cIVzBmWwoARhSdO0XcmXdk";
+        const google_maps_id = "ChIJ0zR6mSu7woAR4GeLs8NKAnQ";
         const restaurant_id = await getPlaceID(google_maps_id);
         await populate(restaurant_id);
         const body = {
@@ -28,7 +28,7 @@ describe('Get all reviews from a specific place', function()
     })
     it('should return empty array', async function()
     {
-        const google_maps_id = "ChIJIzOdv8WkwoAR70rwcFuxOBs";
+        const google_maps_id = "ChIJ9zv46bu6woARxo8Vn52mcCA";
         let restaurant_id = await getPlaceID(google_maps_id);
         restaurant_id = restaurant_id.toString();
         const body = {
