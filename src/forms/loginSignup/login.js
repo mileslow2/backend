@@ -1,6 +1,6 @@
-const comparePasswords = require("../helpers/comparePasswords");
-const user = require("../database/models/user");
-const usedDefense = require("../security");
+const comparePasswords = require("../../helpers/comparePasswords");
+const user = require("../../database/models/user");
+const usedDefense = require("../../security");
 
 function userDataFrom(email)
 {

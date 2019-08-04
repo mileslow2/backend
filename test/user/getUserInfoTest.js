@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 const easyFetch = require("../../src/helpers/easyFetch");
-const URL = "http://Miless-MacBook-Pro.local:8081/getUserInfo";
+const URL = "https://steam-scholars.appspot.com/getUserInfo";
 const user = require("../../src/database/models/user");
 
 describe("get user info", function()

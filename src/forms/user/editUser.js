@@ -1,7 +1,7 @@
-const getPasswordFrom = require("../helpers/getPasswordFrom.js");
-const comparePasswords = require("../helpers/comparePasswords.js");
-const user = require("../database/models/user");
-const usedDefense = require("../security");
+const getPasswordFrom = require("../../helpers/getPasswordFrom.js");
+const comparePasswords = require("../../helpers/comparePasswords.js");
+const user = require("../../database/models/user");
+const usedDefense = require("../../security");
 
 
 async function editUserAction(body)

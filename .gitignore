@@ -6,3 +6,8 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.DS_Store
+.env
+.gitignore
+.yaml
+.gcloudignore
+app.yaml

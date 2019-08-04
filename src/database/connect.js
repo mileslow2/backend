@@ -1,14 +1,17 @@
 const Sequelize = require("sequelize");
 
-var sequelize = new Sequelize("glutenMaps", "root", "123",
-{
-    host: "localhost",
-    dialect: "mysql",
-    logging: false,
-    define:
+const sequelize = new Sequelize(
+    process.env.DBName,
+    process.env.DBUsername,
+    process.env.DBPassword,
     {
-        timestamps: false
-    }
-});
+        host: "localhost",
+        dialect: "mysql",
+        // logging: false,
+        define:
+        {
+            timestamps: false
+        }
+    });
 
 module.exports = sequelize;

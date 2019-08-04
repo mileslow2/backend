@@ -1,15 +1,12 @@
-const editUser = require("./editUser");
-const register = require("./register");
-const login = require("./login");
-const getUserInfo = require("./getUserInfo");
-const getPlaces = require('./getRestaurants');
-const getPlaceInfo = require('./getPlaceInfo');
+const loginSignup = require('./loginSignup');
+const place = require('./place');
+const user = require('./user');
+const review = require('./review');
+
 module.exports = app =>
 {
-    getPlaceInfo(app);
-    register(app);
-    login(app);
-    getUserInfo(app);
-    editUser(app);
-    getPlaces(app);
+    loginSignup(app);
+    place(app);
+    user(app);
+    review(app);
 };
