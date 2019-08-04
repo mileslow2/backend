@@ -12,9 +12,13 @@ module.exports = async google_maps_id =>
             },
             attributes: ["restaurant_id"]
         })
+        .catch(err =>
+        {
+            throw (err)
+        })
         .then(res =>
         {
-            id = res.dataValues;
+            id = res.dataValues.restaurant_id;
         })
-    return id.restaurant_id.toString();
+    return id.toString();
 }
