@@ -1,5 +1,6 @@
 {
-    "dependencies": {
+    "dependencies":
+    {
         "bcrypt": "^3.0.6",
         "chai": "^4.2.0",
         "curl": "^0.1.4",
@@ -16,11 +17,13 @@
         "selenium-webdriver": "^4.0.0-alpha.1",
         "sequelize": "^5.9.0"
     },
-    "scripts": {
+    "scripts":
+    {
         "start": "node app.js",
         "test": "mocha"
     },
-    "directories": {
+    "directories":
+    {
         "test": "test"
     }
 }
