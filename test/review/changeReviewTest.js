@@ -4,6 +4,7 @@ const getPlaceID = require('../helpers/getPlaceID');
 const fetch = require('../../src/helpers/easyFetch');
 const url = "http://Miless-MacBook-Pro.local:8081/addReview";
 const deleteReview = require('./util/deleteReview');
+const google_maps_id = "ChIJ6cIVzBmWwoARhSdO0XcmXdk";
 
 async function getReview(restaurant_id)
 {
@@ -32,11 +33,10 @@ function turnKeysToString(obj)
             obj[key] = obj[key].toString();
 }
 
-describe('add review', () =>
+describe('change the review', () =>
 {
     it('should modify an added review', async function()
     {
-        const google_maps_id = "ChIJ164AL6fy6IkRIVz6x2wafWk";
         let restaurant_id = await getPlaceID(google_maps_id);
         restaurant_id = restaurant_id.toString();
         let review = {

@@ -8,19 +8,20 @@ function checkIfDefined(response)
 
 module.exports = async (url, body) =>
 {
-    var res;
-    body = JSON.stringify(body);
-    const headers = {
-        "Content-Type": "application/json"
-    }
-    await fetch(url,
+    return (
+        await fetch(url,
         {
             method: "POST",
-            body,
-            headers
+            body: JSON.stringify(body),
+            headers:
+            {
+                "Content-Type": "application/json"
+            }
         })
         .catch(err => console.log(err.message))
-        .then(response => response.json())
-        .then(response => (res = response));
-    return res;
+        .then(response =>
+        {
+            return response.json();
+        })
+    );
 };

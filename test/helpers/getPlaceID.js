@@ -2,7 +2,7 @@ const restaurant_infos = require('../../src/database/models/restaurant_info');
 
 module.exports = async google_maps_id =>
 {
-    var id;
+    let id;
     await restaurant_infos
         .findOne(
         {
@@ -16,5 +16,5 @@ module.exports = async google_maps_id =>
         {
             id = res.dataValues;
         })
-    return id.restaurant_id;
+    return id.restaurant_id.toString();
 }
