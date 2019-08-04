@@ -9,3 +9,5 @@ npm-debug.*
 .env
 .gitignore
 .yaml
+.gcloudignore
+app.yaml
