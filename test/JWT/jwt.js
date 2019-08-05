@@ -1,6 +1,7 @@
 const expect = require('chai').expect;
 const fetch = require('../../src/helpers/easyFetch');
 const url = 'http://Miless-MacBook-Pro.local:8081/';
+const jwt = require('jsonwebtoken');
 
 describe('jwt testing', function()
 {

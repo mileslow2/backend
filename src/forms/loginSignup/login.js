@@ -29,16 +29,20 @@ module.exports = async app =>
             body = {
                 user_id: userData.user_id
             };
-
-            jwt.sign(body, process.env.secret, (err, token) =>
-            {
-                body = {
-                    token,
-                    user_id: body.user_id
-                }
-                if (err) throw (err);
-                res.status(200).send(body);
-            })
+            jwt.sign(
+                {}, process.env.secret,
+                {
+                    expiresIn: "7d"
+                },
+                (err, token) =>
+                {
+                    body = {
+                        token,
+                        user_id: body.user_id
+                    }
+                    if (err) throw (err);
+                    res.status(200).send(body);
+                })
 
         }
     });

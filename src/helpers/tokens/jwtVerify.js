@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const existsInDB = require('./existsInDB');
 
 function tokenNecessary(req)
 {
@@ -10,8 +9,10 @@ function tokenNecessary(req)
 
 async function verify(token)
 {
-    await jwt.verify(
-        token, process, err =>
+    return await jwt.verify(
+        token,
+        process.env.secret,
+        err =>
         {
             if (err) return false;
             return true;
@@ -26,8 +27,6 @@ module.exports = async req =>
         return false;
     bearer = bearer.split(' ');
     const token = bearer[1];
-    let valid = await verify(token);
-    const tokenInDB = await existsInDB(token);
-    valid = !tokenInDB;
+    const valid = await verify(token);
     return valid;
 }
