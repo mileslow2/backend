@@ -1,6 +1,5 @@
 {
-    "dependencies":
-    {
+    "dependencies": {
         "bcrypt": "^3.0.6",
         "chai": "^4.2.0",
         "curl": "^0.1.4",
@@ -12,18 +11,17 @@
         "http-server": "^0.11.1",
         "jquery": "^3.4.0",
         "jsdom": "^14.0.0",
+        "jsonwebtoken": "^8.5.1",
         "mysql2": "^1.6.5",
         "node-fetch": "^2.6.0",
         "selenium-webdriver": "^4.0.0-alpha.1",
         "sequelize": "^5.9.0"
     },
-    "scripts":
-    {
+    "scripts": {
         "start": "node app.js",
         "test": "mocha"
     },
-    "directories":
-    {
+    "directories": {
         "test": "test"
     }
 }

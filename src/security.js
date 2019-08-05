@@ -1,6 +1,9 @@
+const JWTVerify = require('./helpers/jwtVerify');
+
+
 function checkIfNotObj(correctObjKeys, req)
 {
-    for (var i = 0; i < correctObjKeys.length; i++)
+    for (let i = 0; i < correctObjKeys.length; i++)
         if (req.body[correctObjKeys[i]] == undefined)
             return true;
     return false;
@@ -8,7 +11,7 @@ function checkIfNotObj(correctObjKeys, req)
 
 function isBad(obj) // change the name
 {
-    for (var key in obj)
+    for (let key in obj)
     {
         if (
             !obj.hasOwnProperty(key) ||
@@ -20,11 +23,14 @@ function isBad(obj) // change the name
     return false;
 }
 
-module.exports = (req, res, keys) =>
+module.exports = async (req, res, keys) =>
 {
-    if (isBad(req.body) || checkIfNotObj(keys, req))
+    const tokenUnVerified = !(await JWTVerify(req));
+    if (tokenUnVerified ||
+        isBad(req.body) ||
+        checkIfNotObj(keys, req))
     {
-        res.status(400).end("false");
+        res.status(403).end("false");
         return true;
     }
     return false;
