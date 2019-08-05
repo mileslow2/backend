@@ -13,23 +13,31 @@ module.exports = async app =>
         body;
     app.post("/login", async (req, res) =>
     {
-        if (usedDefense(req, res, keys)) return;
-
+        if (await usedDefense(req, res, keys)) return;
         userData = await getUserData(req.body.email);
         passwordAttempt = req.body.password;
         hashedPassword = userData.password;
-        verified = userData.emailExists && await comparePasswords(passwordAttempt, hashedPassword);
-        if (verified)
+        verified = userData.emailExists &&
+            await comparePasswords(
+                passwordAttempt,
+                hashedPassword
+            );
+        if (!verified)
             res.status(422).send("false");
         else
         {
             body = {
                 user_id: userData.user_id
             };
+
             jwt.sign(body, process.env.secret, (err, token) =>
             {
+                body = {
+                    token,
+                    user_id: body.user_id
+                }
                 if (err) throw (err);
-                res.status(200).send(token);
+                res.status(200).send(body);
             })
 
         }

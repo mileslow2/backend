@@ -1,4 +1,4 @@
-const JWTVerify = require('./helpers/jwtVerify');
+const JWTVerify = require('./helpers/tokens/jwtVerify');
 
 
 function checkIfNotObj(correctObjKeys, req)
@@ -22,6 +22,8 @@ function isBad(obj) // change the name
     }
     return false;
 }
+
+
 
 module.exports = async (req, res, keys) =>
 {
