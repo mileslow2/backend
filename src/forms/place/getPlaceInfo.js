@@ -32,7 +32,7 @@ async function getMissingInfo(googleMapsID)
 {
     const description = await getDescriptionFrom(googleMapsID);
     const otherMissingInfo = await getExtraInfo(googleMapsID);
-    var missingInfo = otherMissingInfo;
+    let missingInfo = otherMissingInfo;
     missingInfo.description = description;
     return missingInfo;
 }
@@ -43,8 +43,9 @@ module.exports = async app =>
     var info, extraInfo;
     app.post("/getPlaceInfo", async (req, res) =>
     {
-        if (usedDefense(req, res, placeInfoKeys)) return;
+        if (await usedDefense(req, res, placeInfoKeys)) return;
         info = await getPlaceInfo(req.body.id);
+
         if (info == null)
         {
             res.status(200).send("false");
