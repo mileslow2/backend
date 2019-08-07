@@ -36,8 +36,5 @@ module.exports = async (req, res, keys) =>
         res.status(403).end("false");
         return true;
     }
-    console.log('====================================');
-    console.log("hello");
-    console.log('====================================');
     return false;
 }

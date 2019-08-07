@@ -7,16 +7,13 @@ function userDataFrom(email)
         {
             email
         },
-        attributes: ["password", "user_id"]
+        attributes: ["password", "user_id", "verified"]
     };
 }
 
 async function getUserData(query)
 {
     let userData = null;
-    console.log('====================================');
-    console.log(query);
-    console.log('====================================');
     await user
         .findOne(query)
         .catch(errorHandler)

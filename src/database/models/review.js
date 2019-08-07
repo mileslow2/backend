@@ -8,7 +8,6 @@ module.exports = sequelize.define("review",
         type: Sequelize.DECIMAL(2, 1),
         allowNull: false,
         primaryKey: true,
-        defaultValue: true,
         defaultValue: "0"
     },
     body:

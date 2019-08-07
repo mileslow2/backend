@@ -2,6 +2,9 @@ const comparePasswords = require("../../helpers/comparePasswords");
 const usedDefense = require("../../security");
 const getUserData = require('./util/getUserData');
 const jwt = require('jsonwebtoken');
+const email = require('./util/email');
+const newToken = require('./util/newToken');
+
 
 module.exports = async app =>
 {
@@ -15,6 +18,11 @@ module.exports = async app =>
     {
         if (await usedDefense(req, res, keys)) return;
         userData = await getUserData(req.body.email);
+        // if (!userData.verified)
+        // {
+        //     res.status(422).send("please verify your account");
+        //     return;
+        // }
         passwordAttempt = req.body.password;
         hashedPassword = userData.password;
         verified = userData.emailExists &&
@@ -27,23 +35,11 @@ module.exports = async app =>
         else
         {
             body = {
-                user_id: userData.user_id
+                user_id: userData.user_id,
+                token: await newToken("7d")
             };
-            jwt.sign(
-                {}, process.env.secret,
-                {
-                    expiresIn: "7d"
-                },
-                (err, token) =>
-                {
-                    body = {
-                        token,
-                        user_id: body.user_id
-                    }
-                    if (err) throw (err);
-                    res.status(200).send(body);
-                })
-
+            await email();
+            res.status(200).send(body);
         }
     });
 };

@@ -5,14 +5,6 @@ const jwt = require('jsonwebtoken');
 
 describe('jwt testing', function()
 {
-    // it('Should not work because of invalid JWT ', async function()
-    // {
-    //     const body = {
-    //         id: 2449
-    //     }
-    //     const res = await fetch(url + "getPlaceInfo", body);
-    //     expect(false).to.be.equal(res);
-    // })
     it('should login', async function()
     {
         const userData = {
@@ -23,7 +15,7 @@ describe('jwt testing', function()
         expect(26).to.be.equal(res.user_id)
         expect(undefined).to.not.be.equal(res.token);
     })
-    it.only('should work because of valid of god key', async function()
+    it('should work because of valid of god key', async function()
     {
         const body = {
             id: "2449"
