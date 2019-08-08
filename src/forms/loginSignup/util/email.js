@@ -8,7 +8,7 @@ async function makeLink()
 {
     let url = "http://Miless-MacBook-Pro.local:8081/emailVerify";
     url += "?email=" + to + "&token=" + await newToken("1d");
-    return "<a href=\"" + url + "\">Verify Account</a>";
+    return url;
 }
 
 async function makeHTML()

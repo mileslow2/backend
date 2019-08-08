@@ -4,117 +4,75 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        $font-title: 'Open Sans';
+        @import url('https://fonts.googleapis.com/css?family=Roboto:400,700i&display=swap');
 
-        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #fafafa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .c-email {
-            width: 40vw;
-            border-radius: 40px;
-            overflow: hidden;
-            box-shadow: 0px 7px 22px 0px rgba(0, 0, 0, .1);
-
-            &__header {
-                background-color: #0fd59f;
-                width: 100%;
-                height: 60px;
-
-                &__title {
-                    font-size: 23px;
-                    font-family: $font-title;
-                    height: 60px;
-                    line-height: 60px;
-                    margin: 0;
-                    text-align: center;
-                    color: white;
-                }
-            }
-
-            &__content {
-                width: 100%;
-                height: 300px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
-                align-items: center;
-                flex-wrap: wrap;
-                background-color: #fff;
-                padding: 15px;
-
-                &__text {
-                    font-size: 20px;
-                    text-align: center;
-                    color: #343434;
-                    margin-top: 0;
-                }
-            }
-
-            &__code {
-                display: block;
-                width: 60%;
-                margin: 30px auto;
-                background-color: #ddd;
-                border-radius: 40px;
-                padding: 20px;
-                text-align: center;
-                font-size: 36px;
-                font-family: $font-title;
-                letter-spacing: 10px;
-                box-shadow: 0px 7px 22px 0px rgba(0, 0, 0, .1);
-            }
-
-            &__footer {
-                width: 100%;
-                height: 60px;
-                background-color: #fff;
-            }
-        }
-
-        .text-title {
-            font-family: $font-title;
-        }
-
-        .text-center {
+        .center {
+            margin: auto;
+            width: 80%;
+            padding: 10px;
             text-align: center;
         }
 
-        .text-italic {
-            font-style: italic;
+        #body {
+            text-align: left;
+            padding-left: 20px;
+            padding-right: 20px;
         }
 
-        .opacity-30 {
-            opacity: 0.3;
+        #button {
+            margin: auto;
+            width: 200px;
+            height: 30px;
+            background-color: rgb(83, 204, 151);
+            padding: 10px;
+            border-radius: 40px;
+            box-shadow: 0px 5px 4px 0px #9c9c9c;
+
         }
 
-        .mb-0 {
-            margin-bottom: 0;
+        #box {
+            box-shadow: 0px 2px 20px 3px #9c9c9c;
+            padding: 35px;
+            border-radius: 40px;
+            font-family: 'Roboto', sans-serif;
+            color: rgb(136, 136, 136);
         }
+
+        #title {
+            font-weight: 700;
+            font-size: 3em;
+            color: rgb(79, 79, 79);
+        }
+
+        #buttonText {
+            position: relative;
+            bottom: 9px;
+            color: #ffffff;
+        }
+
+        #link {
+            text-decoration: none;
+        }
+
     </style>
 </head>
-<div class="c-email">
-    <div class="c-email__header">
-        <h1 class="c-email__header__title">Your Verification Code</h1>
-    </div>
-    <div class="c-email__content">
-        <p class="c-email__content__text text-title">
-            Enter this verification code in field:
+<div class="center">
+    <div id="box">
+        <h1 id="title">Welcome!</h1>
+        <a>
+            <p id="body">
+                Thank you for signing up! Please click the button below to verify your account and get started using Gluten Maps!
+            </p>
+        </a>
+        <a id="link" href={{{link}}}>
+            <div id="button">
+                <p id="buttonText">Verify your account</p>
+            </div>
+        </a>
+        <p>
+            This button is valid for 1 day
         </p>
-        {{{link}}}
-        <p class="c-email__content__text text-italic opacity-30 text-title mb-0">
-            Verification code is valid only for 30 minutes</p>
     </div>
-    <div class="c-email__footer"></div>
 </div>
 
 </html>
