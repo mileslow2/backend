@@ -1,11 +1,5 @@
 const fetch = require("node-fetch");
 
-function checkIfDefined(response)
-{
-    if (response === undefined) return false;
-    return true;
-}
-
 module.exports = async (url, body) =>
 {
     return (

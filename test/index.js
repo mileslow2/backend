@@ -1,5 +1,6 @@
 require('dotenv').config();
-// require('./place'); G
+require('./place');
 // require('./user');
 // require('./loginSignup');
-require('./review');
+// require('./review');
+// require('./JWT/jwt');

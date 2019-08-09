@@ -29,5 +29,11 @@ module.exports = sequelize.define("user",
     {
         type: Sequelize.STRING(30),
         allowNull: false
+    },
+    verified:
+    {
+        type: Sequelize.TINYINT(1),
+        allowNull: false,
+        defaultValue: '0'
     }
 });

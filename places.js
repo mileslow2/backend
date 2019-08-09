@@ -1,6 +1,6 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
-const addPlace = require('./src/helpers/getRestaurants/addPlace');
+// const addPlace = require('./src/helpers/getRestaurants/addPlace');
 
 function makeParam(param, value)
 {
@@ -43,21 +43,21 @@ async function run()
             console.log(process.env.googleMapsAPIKey);
             console.log('====================================');
             console.log('====================================');
-            console.log(res);
+            console.log(res.results[0].photos[0]);
             console.log('====================================');
-            let data, c;
-            for (var i in res.results)
-            {
-                c = res.results[i];
-                data = {
-                    lat: removeDigits(c.geometry.location.lat, 10),
-                    lng: removeDigits(c.geometry.location.lng, 11),
-                    address: c.formatted_address,
-                    name: c.name,
-                    google_maps_id: c.place_id
-                }
-                await addPlace(data);
-            }
+            // let data, c;
+            // for (var i in res.results)
+            // {
+            //     c = res.results[i];
+            //     data = {
+            //         lat: removeDigits(c.geometry.location.lat, 10),
+            //         lng: removeDigits(c.geometry.location.lng, 11),
+            //         address: c.formatted_address,
+            //         name: c.name,
+            //         google_maps_id: c.place_id
+            //     }
+            //     await addPlace(data);
+            // }
         });
 }
 

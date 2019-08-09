@@ -1,5 +1,5 @@
-const restaurants = require("../../database/models/restaurants");
-const sequelize = require("../../database/connect");
+const restaurants = require("../../../database/models/restaurants");
+const sequelize = require("../../../database/connect");
 
 async function newMarker(data)
 {

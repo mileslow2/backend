@@ -1,8 +1,19 @@
-const sequelize = require('../../database/connect');
-const nearbyPlacesQuery = require('../../helpers/getRestaurants/nearbyPlacesQuery');
-const addNewPlaces = require('../../helpers/getRestaurants/addNewPlaces');
-const getNewPlaces = require('../../helpers/getRestaurants/getNewPlaces');
+const addNewPlaces = require('./util/addNewPlaces');
+const getNewPlaces = require('./util/getNewPlaces');
 const usedDefense = require("../../security");
+const nearbyPlacesQuery = require('./util/nearbyPlacesQuery');
+const sequelize = require('../../database/connect');
+
+function locToString(req)
+{
+    if (req.body["lat"] != undefined &&
+        req.body["lng"] != undefined)
+    {
+        req.body.lat = req.body.lat.toString();
+        req.body.lng = req.body.lng.toString();
+    }
+    return req;
+}
 
 async function getNearbyPlaces(loc)
 {
@@ -17,21 +28,10 @@ async function getNearbyPlaces(loc)
     return nearbyPlaces;
 }
 
-function locToString(req)
-{
-    if (req.body["lat"] != undefined &&
-        req.body["lng"] != undefined)
-    {
-        req.body.lat = req.body.lat.toString();
-        req.body.lng = req.body.lng.toString();
-    }
-    return req;
-}
-
 function locIsValid(loc, res)
 {
     const lat = parseFloat(loc.lat);
-    const lng = parseFloat(loc.lng)
+    const lng = parseFloat(loc.lng);
     const locIsValid = (
         -90 < lat && lat < 90 &&
         -180 < lng && lng < 180
@@ -49,10 +49,9 @@ module.exports = async app =>
     {
         req = locToString(req);
         loc = req.body;
-        if (usedDefense(req, res, keys) ||
+        if (await usedDefense(req, res, keys) ||
             !locIsValid(loc, res)) return;
         nearbyPlaces = await getNearbyPlaces(loc);
-        nearbyPlaces = JSON.stringify(nearbyPlaces);
         if (nearbyPlaces.length < 10)
         {
             newPlaces = await getNewPlaces(loc);
