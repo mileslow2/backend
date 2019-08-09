@@ -14,7 +14,7 @@
         }
 
         #body {
-            text-align: left;
+            text-align: center;
             padding-left: 20px;
             padding-right: 20px;
         }
@@ -45,34 +45,37 @@
         }
 
         #buttonText {
-            position: relative;
-            bottom: 9px;
-            color: #ffffff;
+            margin: auto;
+            width: 70%;
+            padding: 5px;
+            color: #fff;
+            font-size: 1.2em;
         }
 
         #link {
             text-decoration: none;
         }
-
     </style>
 </head>
-<div class="center">
-    <div id="box">
-        <h1 id="title">Welcome!</h1>
-        <a>
-            <p id="body">
-                Thank you for signing up! Please click the button below to verify your account and get started using Gluten Maps!
-            </p>
-        </a>
-        <a id="link" href={{{link}}}>
-            <div id="button">
-                <p id="buttonText">Verify your account</p>
-            </div>
-        </a>
-        <p>
-            This button is valid for 1 day
-        </p>
+
+<body>
+    <div class="center">
+        <div id="box">
+            <h1 id="title">Welcome!</h1>
+            <a>
+                <p id="body">
+                    Thank you for signing up! Please click the button below to verify your account and get started using
+                    Gluten Maps!
+                </p>
+            </a>
+            <a id="link" href={{{link}}}>
+                <div id="button">
+                    <p id="buttonText">Verify your account</p>
+                </div>
+            </a>
+            <p>This link is valid for 1 day</p>
+        </div>
     </div>
-</div>
+</body>
 
 </html>
