@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
-const addRestaurant = require('./addPlace');
-const changeDecimals = require('./changeDecimals')
+const addMissingInfo = require('./addMissingInfo');
 
 function makeParam(param, value)
 {
@@ -9,7 +8,7 @@ function makeParam(param, value)
 
 function makeURL(loc)
 {
-    var googleMapRequest =
+    let googleMapRequest =
         "https://maps.googleapis.com/maps/api/place/textsearch/json?";
     googleMapRequest += makeParam("input", "gluten-free");
     googleMapRequest += makeParam("inputtype", "textquery");
@@ -17,21 +16,28 @@ function makeURL(loc)
     googleMapRequest += makeParam("radius", "1");
     googleMapRequest += makeParam(
         "key",
-        "AIzaSyCtRB-B5BY8RKRrM7oMQAiQirxIU4EMr4M"
+        process.env.googleMapsAPIKey
     );
     googleMapRequest = googleMapRequest.slice(0, -1); //removes the & from the end
     return googleMapRequest
 }
 
+
 module.exports = async loc =>
 {
     const url = makeURL(loc);
-    var newPlaces;
-    await fetch(url)
+    return await fetch(url)
         .then(res => res.json())
         .then(async res =>
         {
-            newPlaces = res;
+            let newPlaces = res.results;
+            for (let i = 0; i < 1; i++)
+            {
+                const missing = await addMissingInfo(newPlaces[i]);
+                Object.assign(newPlaces[i], missing);
+            }
+            return newPlaces;
         });
-    return newPlaces;
+
+
 }

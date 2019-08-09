@@ -8,11 +8,11 @@ module.exports = sequelize.define("restaurant_info",
         type: Sequelize.INTEGER(11),
         unique: true,
         primarykey: false,
-        references:
-        {
-            model: 'restaurants',
-            key: 'restaurant_id'
-        },
+        // references:
+        // {
+        //     model: 'restaurants',
+        //     key: 'restaurant_id'
+        // },
     },
     description:
     {

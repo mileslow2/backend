@@ -40,23 +40,15 @@ async function getMissingInfo(googleMapsID)
 module.exports = async app =>
 {
     const placeInfoKeys = ["id"]
-    var info, extraInfo;
+    var info, body;
     app.post("/getPlaceInfo", async (req, res) =>
     {
         if (await usedDefense(req, res, placeInfoKeys)) return;
         info = await getPlaceInfo(req.body.id);
-
-        if (info == null)
-        {
-            res.status(200).send("false");
-            return;
-        }
-        // if (info["restaurant_hours"] == null)
-        // {
-        //     extraInfo = await getMissingInfo(info.google_maps_id);
-        //     Object.assign(info, extraInfo);
-        // }
-        // info = JSON.stringify(info)
+        if (info === null)
+            info = {
+                err: "can't find the place you are looking for"
+            }
         res.status(200).send(info);
     })
 }
