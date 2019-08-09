@@ -34,7 +34,7 @@ module.exports = app =>
     var passwordAttempt, passwordsSame, editUserSuccesful, badReq;
     app.post("/editUser", async (req, res) =>
     {
-        badReq = usedDefense(req, res, editUserKeys);
+        badReq = await usedDefense(req, res, editUserKeys);
         if (badReq) return;
         hashedPassword = await getPasswordFrom(req.body.id);
         if (hashedPassword == undefined)

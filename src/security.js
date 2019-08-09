@@ -18,7 +18,6 @@ function isBad(obj) // change the name
             obj[key] === undefined ||
             typeof obj[key] != "string"
         ) return true;
-
     }
     return false;
 }
@@ -32,7 +31,6 @@ module.exports = async (req, res, keys) =>
         isBad(req.body) ||
         checkIfNotObj(keys, req))
     {
-
         res.status(403).end("false");
         return true;
     }
