@@ -17,7 +17,6 @@ module.exports = async listOfPlaces =>
             name: place.name,
             google_maps_id: place.place_id,
             phone_number: place.formatted_phone_number,
-
         }
         await addPlace(formattedPlace);
     });
