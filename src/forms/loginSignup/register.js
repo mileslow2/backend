@@ -1,7 +1,7 @@
 const hashPassword = require("../../helpers/hashPassword");
 const user = require("../../database/models/user");
 const usedDefense = require("../../security");
-
+const sendVerificationEmail = require('./util/email');
 
 function registerQuery(userData)
 {
@@ -40,17 +40,20 @@ async function registerUser(query)
 
 module.exports = async app =>
 {
-    var userData, query, registerSuccesful, badReq, reqHasWrongKeys;
+    var userData, query, registerSuccesful;
     const keys = ["password", "email", "first_name", "last_name"];
     app.post("/register", async (req, res) =>
     {
-        if (usedDefense(req, res, keys)) return;
-        if (badReq || reqHasWrongKeys) return;
+        if (await usedDefense(req, res, keys)) return;
         userData = req.body;
         userData.password = await hashPassword(userData.password);
         query = registerQuery(userData);
         registerSuccesful = await registerUser(query);
-        if (registerSuccesful) res.status(201).end("true");
+        if (registerSuccesful)
+        {
+            sendVerificationEmail(req.body.email);
+            res.status(201).end("true");
+        }
         else res.status(422).end("false");
     });
 };

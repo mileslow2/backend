@@ -1,50 +1,48 @@
-const hbs = require('handlebars')
-const nodemailer = require('nodemailer');
-const newToken = require('./newToken');
+const Mailgun = require("mailgun-js");
 const readFile = require('./readFile');
-const to = process.env.emailUser;
-
-async function makeLink()
+const newToken = require('./newToken');
+const
 {
-    let url = "http://Miless-MacBook-Pro.local:8081/emailVerify";
-    url += "?email=" + to + "&token=" + await newToken("1d");
-    return url;
+    compile
+} = require('handlebars')
+
+async function makeLink(to)
+{
+    return (
+        "http://Miless-MacBook-Pro.local:8081/emailVerify" +
+        "?email=" + to + "&token=" + await newToken("1d")
+    );
 }
 
-async function makeHTML()
+async function makeHTML(to)
 {
     const html = readFile();
-    let template = hbs.compile(html);
-    const link = await makeLink();
+    let template = compile(html);
+    const link = await makeLink(to);
     const replacements = {
         link
     }
     return template(replacements);
 }
 
-module.exports = async () =>
+const mg = new Mailgun(
 {
+    apiKey: process.env.mailgunAPIKey,
+    domain: process.env.mailgunDomain
+});
 
-    const testAccount = await nodemailer.createTestAccount();
+module.exports = async to =>
+{
+    const data = {
+        from: 'Excited User <me@samples.mailgun.org>',
+        to,
+        subject: 'Hello',
+        html: await makeHTML(to)
+    };
 
-    const transporter = nodemailer.createTransport(
-    {
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth:
+    mg.messages()
+        .send(data, function(error, body)
         {
-            user: testAccount.user, // generated ethereal user
-            pass: testAccount.pass // generated ethereal password
-        }
-    });
-
-    const mailOptions = {
-        from: '"Fred Foo 👻" <foo@example.com>', // sender address
-        to, // list of receivers
-        subject: "Your verification code", // Subject line,
-        html: await makeHTML()
-    }
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+            if (error) throw (error);
+        });
 }

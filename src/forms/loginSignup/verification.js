@@ -4,9 +4,6 @@ const secret = process.env.secret;
 
 async function checkValidity(token)
 {
-    console.log('====================================');
-    console.log(token);
-    console.log('====================================');
     return await jwt.verify(
         token,
         secret,
@@ -15,7 +12,6 @@ async function checkValidity(token)
             if (err) return false;
             else return true;
         });
-
 }
 
 async function validateUser(email)
@@ -23,9 +19,6 @@ async function validateUser(email)
     const valuesToSelect = {
         verified: 1
     }
-    console.log('====================================');
-    console.log(email);
-    console.log('====================================');
     const selector = {
         where:
         {
@@ -35,12 +28,6 @@ async function validateUser(email)
     await user
         .update(valuesToSelect, selector)
         .catch(errorHandler)
-        .then(res =>
-        {
-            console.log('====================================');
-            console.log(res);
-            console.log('====================================');
-        })
 }
 
 module.exports = async app =>
