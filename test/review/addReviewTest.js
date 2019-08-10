@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const randomRestID = require('./util/randRestID');
+const randomRestID = require('../helpers/randRestID');
 const fetch = require('../helpers/easyFetch');
 const deleteReview = require('./util/deleteReview');
 const url = 'http://Miless-MacBook-Pro.local:8081/addReview';

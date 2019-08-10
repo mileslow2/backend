@@ -1,4 +1,4 @@
-const sequelize = require('../../../src/database/connect');
+const sequelize = require('../../src/database/connect');
 
 module.exports = async () =>
 {

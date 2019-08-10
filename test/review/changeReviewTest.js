@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 const review = require('../../src/database/models/review');
-const randRestID = require('./util/randRestID');
+const randRestID = require('../helpers/randRestID');
 const fetch = require('../helpers/easyFetch');
 const url = "http://Miless-MacBook-Pro.local:8081/addReview";
 const deleteReview = require('./util/deleteReview');
