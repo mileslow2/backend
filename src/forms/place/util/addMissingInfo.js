@@ -8,9 +8,6 @@ function getPlaceDetails(google_maps_id)
     url += "placeid=" + google_maps_id;
     url += "&fields=" + "formatted_phone_number,opening_hours,url";
     url += "&key=" + process.env.googleMapsAPIKey;
-    console.log('====================================');
-    console.log(url);
-    console.log('====================================');
     return fetch(url)
         .catch(err =>
         {
@@ -26,8 +23,9 @@ module.exports = async place =>
 {
     const google_maps_id = place.place_id;
     let placeDetails = await getPlaceDetails(google_maps_id);
-    const description = await getDescription(placeDetails.url);
-    placeDetails.description = description;
+    placeDetails = placeDetails.result;
+    // const description = await getDescription(placeDetails.url);
+    placeDetails.description = "hello";
     const photoRef = place.photos[0].photo_reference;
     await addImage(photoRef, google_maps_id);
     return placeDetails;

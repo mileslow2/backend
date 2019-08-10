@@ -4,7 +4,7 @@ const loginURL = "http://Miless-MacBook-Pro.local:8081/login";
 
 describe("login", function()
 {
-    // only works with real emails
+    // can't test email verification. But the login sequence works
 
     // it.only("should login", async function()
     // {
