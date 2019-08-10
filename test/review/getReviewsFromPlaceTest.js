@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
-const fetch = require('../../src/helpers/easyFetch');
+const fetch = require('../helpers/easyFetch');
 const url = 'http://Miless-MacBook-Pro.local:8081/getReviewsFromPlace';
-const getPlaceID = require('../helpers/getPlaceID');
+const randRestID = require('./util/randRestID');
 const addReview = require('./util/addReview');
 const deleteReview = require('./util/deleteReview');
 
@@ -16,7 +16,7 @@ describe('Get all reviews from a specific place', function()
     it('should get all reviews from a restaurant_id', async function()
     {
         const google_maps_id = "ChIJ0zR6mSu7woAR4GeLs8NKAnQ";
-        const restaurant_id = await getPlaceID(google_maps_id);
+        const restaurant_id = await randRestID(google_maps_id);
         await populate(restaurant_id);
         const body = {
             restaurant_id
@@ -29,7 +29,7 @@ describe('Get all reviews from a specific place', function()
     it('should return empty array', async function()
     {
         const google_maps_id = "ChIJ9zv46bu6woARxo8Vn52mcCA";
-        let restaurant_id = await getPlaceID(google_maps_id);
+        let restaurant_id = await randRestID(google_maps_id);
         restaurant_id = restaurant_id.toString();
         const body = {
             restaurant_id

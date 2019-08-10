@@ -1,10 +1,9 @@
 const expect = require("chai").expect;
 const review = require('../../src/database/models/review');
-const getPlaceID = require('../helpers/getPlaceID');
-const fetch = require('../../src/helpers/easyFetch');
+const randRestID = require('./util/randRestID');
+const fetch = require('../helpers/easyFetch');
 const url = "http://Miless-MacBook-Pro.local:8081/addReview";
 const deleteReview = require('./util/deleteReview');
-const google_maps_id = "ChIJcaqDn7-6woARNn2eauKOKSc";
 
 async function getReview(restaurant_id)
 {
@@ -37,7 +36,7 @@ describe('change the review', () =>
 {
     it('should modify an added review', async function()
     {
-        const restaurant_id = await getPlaceID(google_maps_id);
+        const restaurant_id = await randRestID();
         let review = {
             stars: "4.7",
             user_id: "14",

@@ -1,19 +1,8 @@
 const expect = require("chai").expect;
-const getPlaceID = require('../helpers/getPlaceID');
+const randomRestID = require('./util/randRestID');
 const fetch = require('../helpers/easyFetch');
 const deleteReview = require('./util/deleteReview');
 const url = 'http://Miless-MacBook-Pro.local:8081/addReview';
-const sequelize = require('../../src/database/connect');
-
-async function randomRestID()
-{
-    return await sequelize
-        .query("SELECT `restaurant_id` FROM `restaurant_infos`;")
-        .then((rests) =>
-        {
-            return rests[0][0].restaurant_id.toString();
-        })
-}
 
 describe('add review', () =>
 {

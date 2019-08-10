@@ -1,17 +1,17 @@
 const expect = require('chai').expect;
-const fetch = require('../../src/helpers/easyFetch');
+const fetch = require('../helpers/easyFetch');
 const url = 'http://Miless-MacBook-Pro.local:8081/getReviewsFromUser';
-const getPlaceID = require('../helpers/getPlaceID');
+const randRestID = require('./util/randRestID');
 const addReview = require('./util/addReview');
 const deleteReview = require('./util/deleteReview');
 
 async function populate()
 {
     let google_maps_id = "ChIJcaqDn7-6woARNn2eauKOKSc";
-    let restaurant_id = await getPlaceID(google_maps_id);
+    let restaurant_id = await randRestID(google_maps_id);
     restaurant_id = restaurant_id.toString();
     google_maps_id = "ChIJxS6RQ466woARryN0C786MwI";
-    restaurant_id = await getPlaceID(google_maps_id);
+    restaurant_id = await randRestID(google_maps_id);
     restaurant_id = restaurant_id.toString();
     await addReview("14", restaurant_id);
     await addReview("14", restaurant_id);
