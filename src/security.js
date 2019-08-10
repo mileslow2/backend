@@ -26,13 +26,14 @@ function isBad(obj) // change the name
 
 module.exports = async (req, res, keys) =>
 {
-    const tokenUnVerified = !(await JWTVerify(req));
-    if (tokenUnVerified ||
+    const tokenVerified = await JWTVerify(req);
+    if (!tokenVerified ||
         isBad(req.body) ||
         checkIfNotObj(keys, req))
     {
         res.status(403).end("false");
         return true;
     }
+
     return false;
 }

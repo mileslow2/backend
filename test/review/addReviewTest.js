@@ -1,16 +1,27 @@
 const expect = require("chai").expect;
 const getPlaceID = require('../helpers/getPlaceID');
-const fetch = require('../../src/helpers/easyFetch');
+const fetch = require('../helpers/easyFetch');
 const deleteReview = require('./util/deleteReview');
-const google_maps_id = "ChIJcaqDn7-6woARNn2eauKOKSc";
 const url = 'http://Miless-MacBook-Pro.local:8081/addReview';
+const sequelize = require('../../src/database/connect');
+
+async function randomRestID()
+{
+    return await sequelize
+        .query("SELECT `restaurant_id` FROM `restaurant_infos`;")
+        .then((rests) =>
+        {
+            return rests[0][0].restaurant_id.toString();
+        })
+}
 
 describe('add review', () =>
 {
 
     it('should add a review', async function()
     {
-        const restaurant_id = await getPlaceID(google_maps_id);
+
+        const restaurant_id = await randomRestID();
         const review = {
             stars: "4.7",
             user_id: "14",
@@ -24,7 +35,7 @@ describe('add review', () =>
     });
     it('should add a review without a body', async function()
     {
-        const restaurant_id = await getPlaceID(google_maps_id);
+        const restaurant_id = await randomRestID();
         const review = {
             stars: "4.7",
             user_id: "14",

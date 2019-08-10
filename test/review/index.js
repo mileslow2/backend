@@ -1,4 +1,4 @@
 require('./addReviewTest');
-require('./changeReviewTest');
-require('./getReviewsFromPlaceTest');
-require('./getReviewsFromUserTest');
+// require('./changeReviewTest');
+// require('./getReviewsFromPlaceTest');
+// require('./getReviewsFromUserTest');
