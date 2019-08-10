@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const easyFetch = require("../../src/helpers/easyFetch");
+const easyFetch = require('../helpers/easyFetch');
 const user = require('../../src/database/models/user')
 const url = "http://Miless-MacBook-Pro.local:8081/editUser";
 

@@ -30,7 +30,7 @@ module.exports = app =>
     var reviewAdded, statusCode;
     app.post("/addReview", async (req, res) =>
     {
-        if (usedDefense(req, res, keys)) return;
+        if (await usedDefense(req, res, keys)) return;
         reviewAdded = await handleReview(req.body);
         statusCode = reviewAdded ? 200 : 400;
         reviewAdded = reviewAdded.toString();

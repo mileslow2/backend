@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
-const easyFetch = require("../../src/helpers/easyFetch");
-const URL = "https://steam-scholars.appspot.com/getUserInfo";
+const easyFetch = require('../helpers/easyFetch');
+const URL = "http://Miless-MacBook-Pro.local:8081/getUserInfo";
 const user = require("../../src/database/models/user");
 
 describe("get user info", function()
@@ -26,11 +26,6 @@ describe("get user info", function()
         const res = await easyFetch(URL, body);
         const expectedRes = false;
         expect(expectedRes).to.be.equal(res);
-    })
-    it("shouldn't get user info because of invalid request", async function()
-    {
-        const res = await easyFetch(URL, "foo");
-        expect(res).to.be.equal(false);
     })
     it("shouldn't get user info because of invalid request", async function()
     {

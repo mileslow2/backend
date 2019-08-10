@@ -31,7 +31,8 @@ module.exports = app =>
     var query, userInfo;
     app.post("/getUserInfo", async (req, res) =>
     {
-        if (usedDefense(req, res, keys)) return;
+        if (await usedDefense(req, res, keys)) return;
+
         query = userInfoQuery(req.body.id);
         userInfo = await userInfoAction(query);
         userInfo = JSON.stringify(userInfo);

@@ -13,19 +13,16 @@ function infoQuery(restaurant_id)
 }
 async function getPlaceInfo(restaurant_id)
 {
-    var info;
     const fromRestaurantID = infoQuery(restaurant_id);
-    await restaurant_info
+    return await restaurant_info
         .findOne(fromRestaurantID)
         .catch(errorHandler)
         .then(results =>
         {
             if (results == null)
-                info = null;
-            else
-                info = results.dataValues;
+                return null;
+            return results.dataValues;
         })
-    return info;
 }
 
 async function getMissingInfo(googleMapsID)
@@ -39,11 +36,11 @@ async function getMissingInfo(googleMapsID)
 
 module.exports = async app =>
 {
-    const placeInfoKeys = ["id"]
+    const keys = ["id"]
     var info, body;
     app.post("/getPlaceInfo", async (req, res) =>
     {
-        if (await usedDefense(req, res, placeInfoKeys)) return;
+        if (await usedDefense(req, res, keys)) return;
         info = await getPlaceInfo(req.body.id);
         if (info === null)
             info = {

@@ -3,7 +3,7 @@ const getReviews = require('./util/getReviews');
 
 async function getReviewsFrom(req, res, keys)
 {
-    if (usedDefense(req, res, keys)) return;
+    if (await usedDefense(req, res, keys))  return;
     let reviews = await getReviews(req.body);
     reviews = JSON.stringify(reviews);
     res.status(200).end(reviews);

@@ -1,0 +1,2 @@
+// require("./getPlaceInfoTest");
+require("./getPlacesTest");
