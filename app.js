@@ -8,15 +8,6 @@ const errorHandler = err =>
     if (err) throw err.message;
 };
 
-function formatPhoneNumber()
-{
-    var phoneNumber = "(310) 393-3236";
-    return phoneNumber.replace(/\D/g, '');;
-}
-
-console.log('====================================');
-console.log(formatPhoneNumber());
-console.log('====================================');
 global.errorHandler = errorHandler;
 app.use(helmet());
 app.use(bodyParser.json());
