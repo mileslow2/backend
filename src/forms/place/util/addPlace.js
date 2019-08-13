@@ -26,20 +26,22 @@ async function newMarker(data)
 
 async function newInfo(data, id)
 {
+    data.phoneNumber = parseInt(data.phoneNumber)
     const rawQuery =
         "INSERT INTO `glutenMaps`.`restaurant_infos`" +
         " (`restaurant_id`, `address`, `google_maps_id`, " +
         "`phone_number`, `hours`) VALUES (\"" +
         id + '", "' +
         data.address + '", "' +
-        data.phoneNumber + '", ' +
+        data.googleMapsID + '", "' +
+        data.phoneNumber + '", "' +
         data.hours + '" ' +
         ")";
     await sequelize
         .query(rawQuery)
         .catch(err =>
         {
-            throw (err.message)
+            throw (err)
         })
 }
 

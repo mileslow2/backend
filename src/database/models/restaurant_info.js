@@ -16,27 +16,24 @@ module.exports = sequelize.define("restaurant_info",
     },
     description:
     {
-        type: Sequelize.STRING(130),
-        allowNull: true
-    },
-    average:
-    {
-        type: Sequelize.TINYINT(4),
+        type: Sequelize.STRING(200),
         allowNull: true
     },
     address:
     {
-        type: Sequelize.STRING(45),
+        type: Sequelize.STRING(200),
         allowNull: false
     },
     phone_number:
     {
-        type: Sequelize.INTEGER(8),
-        allowNull: true
+        type: Sequelize.STRING(10),
+        allowNull: false
     },
-    restaurant_hours:
+    hours:
     {
-        type: Sequelize.INTEGER(12)
+        type: Sequelize.STRING(56),
+        allowNull: false
+
     },
     google_maps_id:
     {

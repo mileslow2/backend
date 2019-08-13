@@ -28,9 +28,9 @@ module.exports = async loc =>
     const url = makeURL(loc);
     return await fetch(url)
         .then(res => res.json())
-        .then(async res =>
+        .then(res =>
         {
-            return newPlaces;
+            return res.results;
         });
 
 

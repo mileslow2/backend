@@ -3,7 +3,10 @@ const formatHours = openingHours =>
     let timeAsInt = "";
     let len = openingHours.periods.length;
     for (let i = 0; i < len; i++)
+    {
         timeAsInt += openingHours.periods[i].open.time;
+        timeAsInt += openingHours.periods[i].close.time;
+    }
     return timeAsInt;
 }
 
@@ -21,8 +24,8 @@ const formatPlace = place =>
         lat: place.geometry.location.lat,
         lng: place.geometry.location.lng,
         address: place.formatted_address,
-        name: place.name,
         googleMapsID: place.place_id,
+        name: place.name,
     };
 }
 

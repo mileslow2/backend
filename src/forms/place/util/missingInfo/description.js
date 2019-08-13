@@ -78,5 +78,5 @@ module.exports = async place =>
     {
         await driver.quit();
     }
-    addDescriptionToDB(place.place_id, desc);
+    await addDescriptionToDB(place.place_id, desc);
 }
