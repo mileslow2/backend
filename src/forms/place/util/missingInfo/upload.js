@@ -22,7 +22,7 @@ function makeURL(photoRef)
 {
     return (
         "https://maps.googleapis.com/maps/api/place/photo" +
-        "?maxwidth=100&photoreference=" +
+        "?maxwidth=100&maxheight=100&photoreference=" +
         photoRef + "&key=" + process.env.googleMapsAPIKey
     )
 }
@@ -46,9 +46,7 @@ module.exports = (photoRef, placeid) =>
         res.pipe(stream);
         stream.on('error', (err) =>
         {
-            console.log('====================================');
-            console.log(err.message);
-            console.log('====================================');
+            throw err;
         });
     });
 }

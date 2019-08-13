@@ -1,20 +1,22 @@
 const addPlace = require('./addPlace');
 const addImage = require('./missingInfo/upload');
 const fetch = require('../../../helpers/easyFetch');
-const addDescriptionToDB = require('./missingInfo/description')
+const addDescriptionsToDB = require('./missingInfo/description')
 const
 {
     formatPlace
 } = require('./missingInfo/formatItems');
 
-async function addCompletePlacesToDB(placeList)
+function formatList(placeList)
 {
-    let formattedPlace;
-    for (let i = 0, len = placeList.length; i < 1; i++)
-    {
-        formattedPlace = formatPlace(placeList[i]);
-        addPlace(formattedPlace);
-    }
+    for (let i = 0, len = placeList.length; i < len; i++)
+        placeList[i] = formatPlace(placeList[i]);
+}
+
+function addCompletePlacesToDB(placeList)
+{
+    for (let i = 0, len = placeList.length; i < len; i++)
+        addPlace(placeList[i]);
 }
 
 async function uploadImagesToCDN(placeList)
@@ -23,7 +25,7 @@ async function uploadImagesToCDN(placeList)
     for (let i = 0, len = placeList.length; i < len; i++)
     {
         photoRef = placeList[i].photos[0].photo_reference;
-        addImage(photoRef, placeList[i].place_id);
+        addImage(photoRef, placeList[i].googleMapsID);
     }
 }
 
@@ -55,16 +57,11 @@ async function addMissingInfo(placeList)
     }
 }
 
-async function addDescriptionsToDB(placeList)
-{
-    for (let i = 0, len = placeList.length; i < len; i++)
-        addDescriptionToDB(placeList[i].place_id);
-}
-
 module.exports = async placeList =>
 {
     await addMissingInfo(placeList);
+    await formatList(placeList);
     await addCompletePlacesToDB(placeList);
-    await uploadImagesToCDN(placeList);
+    uploadImagesToCDN(placeList);
     addDescriptionsToDB(placeList);
 }

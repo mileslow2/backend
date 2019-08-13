@@ -33,8 +33,11 @@ async function getDescription(driver, elementSearched)
     return span;
 }
 
-function addDescriptionToDB(google_maps_id, description)
+async function addDescriptionToDB(google_maps_id, description)
 {
+    console.log('====================================');
+    console.log(description);
+    console.log('====================================');
     const selector = {
         where:
         {
@@ -44,7 +47,7 @@ function addDescriptionToDB(google_maps_id, description)
     const valuesToSelect = {
         description
     }
-    restaurant_info
+    await restaurant_info
         .update(valuesToSelect, selector)
         .catch((err) =>
         {
@@ -52,31 +55,41 @@ function addDescriptionToDB(google_maps_id, description)
         })
 }
 
-module.exports = async place =>
+function makeURLList(placeList)
 {
-    var desc;
-    let elementSearched = "section-editorial-quote section-editorial-divider";
-    let driver = await new Builder()
+    let urlList = [];
+    for (let i = 0, len = placeList.length; i < len; i++)
+        urlList.push(placeList[i].url);
+    return urlList;
+}
+
+module.exports = async placeList =>
+{
+    const urlList = makeURLList(placeList);
+    let desc;
+    const driver = await new Builder()
         .forBrowser("firefox")
         .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
         .build();
-    try
+
+    for (let i = 0, len = urlList.length; i < len; i++)
     {
-        await driver.get(place.url);
-        desc = await getDescription(driver, elementSearched);
-    }
-    catch (err)
-    {
-        const message = err.message.substring(0, 9);
-        if (message == "not found")
+        try
         {
-            elementSearched = "section-editorial-quote";
-            desc = await getDescription(driver, elementSearched)
+            await driver.get(urlList[i]);
+            desc = await getDescription(driver, "section-editorial-quote section-editorial-divider");
+            await addDescriptionToDB(placeList[i].googleMapsID, desc);
+        }
+        catch (err)
+        {
+            const message = err.message.substring(0, 9);
+            if (message == "not found")
+            {
+                desc = await getDescription(driver, "section-editorial-quote");
+                await addDescriptionToDB(placeList[i].googleMapsID, desc);
+            }
+            else throw (err);
         }
     }
-    finally
-    {
-        await driver.quit();
-    }
-    await addDescriptionToDB(place.place_id, desc);
+    await driver.quit();
 }

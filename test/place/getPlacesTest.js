@@ -34,7 +34,7 @@ function objContainsNull(obj)
 
 describe('get places', function()
 {
-    it("should get places from Google Maps and add them to DB", async function()
+    it.only("should get places from Google Maps and add them to DB", async function()
     {
         await deletePlaces();
         const loc = {
@@ -48,8 +48,8 @@ describe('get places', function()
     })
     it('should check if places are in db', async function()
     {
+        await sleep.sleep(4);
         const placesFromDB = await getPlaces();
-        await sleep.sleep(4)
         const place = placesFromDB[0];
         expect(false).to.be.equal(objContainsNull(place));
     });

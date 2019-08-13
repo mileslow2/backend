@@ -25,7 +25,9 @@ const formatPlace = place =>
         lng: place.geometry.location.lng,
         address: place.formatted_address,
         googleMapsID: place.place_id,
-        name: place.name,
+        photos: place.photos,
+        url: place.url,
+        name: place.name
     };
 }
 
@@ -43,6 +45,6 @@ const formatDescription = desc =>
 }
 
 module.exports = {
+    formatDescription,
     formatPlace,
-    formatHours
 }
