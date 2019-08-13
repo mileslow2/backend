@@ -22,13 +22,18 @@ async function newMarker(data)
     return restaurant_id;
 }
 
+
+
 async function newInfo(data, id)
 {
     const rawQuery =
-        "INSERT INTO `glutenMaps`.`restaurant_infos` (`restaurant_id`, `address`, `google_maps_id`) VALUES (\"" +
+        "INSERT INTO `glutenMaps`.`restaurant_infos`" +
+        " (`restaurant_id`, `address`, `google_maps_id`, " +
+        "`phone_number`, `hours`) VALUES (\"" +
         id + '", "' +
         data.address + '", "' +
-        data.google_maps_id + '" ' +
+        data.phoneNumber + '", ' +
+        data.hours + '" ' +
         ")";
     await sequelize
         .query(rawQuery)

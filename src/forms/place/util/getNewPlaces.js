@@ -30,19 +30,6 @@ module.exports = async loc =>
         .then(res => res.json())
         .then(async res =>
         {
-            let newPlaces = res.results;
-            console.time("the whole thing");
-            for (let i = 0, len = newPlaces.length; i < len; i++)
-            {
-                console.log('====================================');
-                console.log("begin restaurant");
-                console.log('====================================');
-                console.time("new restaurant");
-                const missing = await addMissingInfo(newPlaces[i]);
-                Object.assign(newPlaces[i], missing);
-                console.timeEnd("new restaurant");
-            }
-            console.timeEnd("the whole thing");
             return newPlaces;
         });
 

@@ -2,31 +2,20 @@ const
 {
     Builder,
     By,
-    Key,
     until
 } = require("selenium-webdriver");
+const
+{
+    formatDescription
+} = require('./formatItems');
 const firefox = require("selenium-webdriver/firefox");
-const url =
-    "https://www.google.com/maps/place/Gjusta/";
-var elementSearched = "section-editorial-quote section-editorial-divider";
+const restaurant_info = require('../../../../database/models/restaurant_info');
 const screen = {
     width: 640,
     height: 480
 };
 
-function removeHTML(span)
-{
-    var endIndex;
-    span = span.replace("</span>", "");
-    for (var i = 0; i < span.length; i++)
-        if (span[i] == "<")
-        {
-            endIndex = span.search(">");
-            span = span.substring(endIndex + 1, span.length);
-        }
-    return span;
-}
-async function getDescription(driver)
+async function getDescription(driver, elementSearched)
 {
     await driver.wait(
         until.elementLocated(
@@ -40,21 +29,41 @@ async function getDescription(driver)
     span = await driver
         .findElement(By.css("div[class='" + elementSearched + "']"))
         .getAttribute("innerHTML");
-    span = removeHTML(span);
+    span = formatDescription(span);
     return span;
 }
 
-module.exports = async url =>
+function addDescriptionToDB(google_maps_id, description)
+{
+    const selector = {
+        where:
+        {
+            google_maps_id
+        }
+    };
+    const valuesToSelect = {
+        description
+    }
+    restaurant_info
+        .update(valuesToSelect, selector)
+        .catch((err) =>
+        {
+            throw (err);
+        })
+}
+
+module.exports = async place =>
 {
     var desc;
+    let elementSearched = "section-editorial-quote section-editorial-divider";
     let driver = await new Builder()
         .forBrowser("firefox")
         .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
         .build();
     try
     {
-        await driver.get(url);
-        desc = await getDescription(driver);
+        await driver.get(place.url);
+        desc = await getDescription(driver, elementSearched);
     }
     catch (err)
     {
@@ -62,12 +71,12 @@ module.exports = async url =>
         if (message == "not found")
         {
             elementSearched = "section-editorial-quote";
-            desc = await getDescription(driver)
+            desc = await getDescription(driver, elementSearched)
         }
     }
     finally
     {
         await driver.quit();
     }
-    return desc;
+    addDescriptionToDB(place.place_id, desc);
 }

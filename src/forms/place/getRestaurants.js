@@ -1,4 +1,4 @@
-const addNewPlaces = require('./util/addNewPlaces');
+const addNewPlacesToDB = require('./util/addNewPlaces');
 const getNewPlaces = require('./util/getNewPlaces');
 const usedDefense = require("../../security");
 const nearbyPlacesQuery = require('./util/nearbyPlacesQuery');
@@ -58,7 +58,7 @@ module.exports = async app =>
             nearbyPlaces = nearbyPlaces.concat(newPlaces);
             nearbyPlaces = JSON.stringify(nearbyPlaces);
             res.status(200).end(nearbyPlaces);
-            await addNewPlaces(newPlaces, loc);
+            addNewPlacesToDB(newPlaces, loc);
         }
         else res.status(200).end(nearbyPlaces);
     })
