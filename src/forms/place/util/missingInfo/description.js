@@ -23,7 +23,7 @@ async function getDescription(driver, elementSearched)
                 "div[class='" + elementSearched + "']"
             )
         ),
-        5000,
+        6000,
         "not found"
     );
     span = await driver
@@ -35,9 +35,6 @@ async function getDescription(driver, elementSearched)
 
 async function addDescriptionToDB(google_maps_id, description)
 {
-    console.log('====================================');
-    console.log(description);
-    console.log('====================================');
     const selector = {
         where:
         {
@@ -85,8 +82,19 @@ module.exports = async placeList =>
             const message = err.message.substring(0, 9);
             if (message == "not found")
             {
-                desc = await getDescription(driver, "section-editorial-quote");
-                await addDescriptionToDB(placeList[i].googleMapsID, desc);
+                try
+                {
+                    desc = await getDescription(driver, "section-editorial-quote");
+                    await addDescriptionToDB(placeList[i].googleMapsID, desc);
+                }
+                catch (err)
+                {
+                    const message = err.message.substring(0, 9);
+                    if (message == "not found")
+                        await addDescriptionToDB(placeList[i].googleMapsID, null);
+
+                }
+
             }
             else throw (err);
         }
