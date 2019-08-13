@@ -2,31 +2,20 @@ const
 {
     Builder,
     By,
-    Key,
     until
 } = require("selenium-webdriver");
+const
+{
+    formatDescription
+} = require('./formatItems');
 const firefox = require("selenium-webdriver/firefox");
-const url =
-    "https://www.google.com/maps/place/Gjusta/";
-var elementSearched = "section-editorial-quote section-editorial-divider";
+const restaurant_info = require('../../../../database/models/restaurant_info');
 const screen = {
     width: 640,
     height: 480
 };
 
-function removeHTML(span)
-{
-    var endIndex;
-    span = span.replace("</span>", "");
-    for (var i = 0; i < span.length; i++)
-        if (span[i] == "<")
-        {
-            endIndex = span.search(">");
-            span = span.substring(endIndex + 1, span.length);
-        }
-    return span;
-}
-async function getDescription(driver)
+async function getDescription(driver, elementSearched)
 {
     await driver.wait(
         until.elementLocated(
@@ -34,40 +23,81 @@ async function getDescription(driver)
                 "div[class='" + elementSearched + "']"
             )
         ),
-        5000,
+        6000,
         "not found"
     );
     span = await driver
         .findElement(By.css("div[class='" + elementSearched + "']"))
         .getAttribute("innerHTML");
-    span = removeHTML(span);
+    span = formatDescription(span);
     return span;
 }
 
-module.exports = async url =>
+async function addDescriptionToDB(google_maps_id, description)
 {
-    var desc;
-    let driver = await new Builder()
+    const selector = {
+        where:
+        {
+            google_maps_id
+        }
+    };
+    const valuesToSelect = {
+        description
+    }
+    await restaurant_info
+        .update(valuesToSelect, selector)
+        .catch((err) =>
+        {
+            throw (err);
+        })
+}
+
+function makeURLList(placeList)
+{
+    let urlList = [];
+    for (let i = 0, len = placeList.length; i < len; i++)
+        urlList.push(placeList[i].url);
+    return urlList;
+}
+
+module.exports = async placeList =>
+{
+    const urlList = makeURLList(placeList);
+    let desc;
+    const driver = await new Builder()
         .forBrowser("firefox")
         .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
         .build();
-    try
+
+    for (let i = 0, len = urlList.length; i < len; i++)
     {
-        await driver.get(url);
-        desc = await getDescription(driver);
-    }
-    catch (err)
-    {
-        const message = err.message.substring(0, 9);
-        if (message == "not found")
+        try
         {
-            elementSearched = "section-editorial-quote";
-            desc = await getDescription(driver)
+            await driver.get(urlList[i]);
+            desc = await getDescription(driver, "section-editorial-quote section-editorial-divider");
+            await addDescriptionToDB(placeList[i].googleMapsID, desc);
+        }
+        catch (err)
+        {
+            const message = err.message.substring(0, 9);
+            if (message == "not found")
+            {
+                try
+                {
+                    desc = await getDescription(driver, "section-editorial-quote");
+                    await addDescriptionToDB(placeList[i].googleMapsID, desc);
+                }
+                catch (err)
+                {
+                    const message = err.message.substring(0, 9);
+                    if (message == "not found")
+                        await addDescriptionToDB(placeList[i].googleMapsID, null);
+
+                }
+
+            }
+            else throw (err);
         }
     }
-    finally
-    {
-        await driver.quit();
-    }
-    return desc;
+    await driver.quit();
 }
