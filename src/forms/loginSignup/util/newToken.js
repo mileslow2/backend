@@ -1,10 +1,16 @@
-const jwt = require('jsonwebtoken');
-
-module.exports = expiresIn =>
+const
 {
+    sign
+} = require('jsonwebtoken');
+
+module.exports = (expiresIn, path) =>
+{
+    let secret = process.env.secret;
+    if (path != "register")
+        secret = process.env.passwordSecret;
     return (
-        jwt.sign(
-        {}, process.env.secret,
+        sign(
+        {}, secret,
         {
             expiresIn
         })

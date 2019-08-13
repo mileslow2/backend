@@ -33,7 +33,7 @@ module.exports = async app =>
         {
             body = {
                 user_id: userData.user_id,
-                token: await newToken("7d")
+                token: await newToken("7d", "register")
             };
             res.status(200).send(body);
         }
