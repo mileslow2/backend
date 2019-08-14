@@ -36,8 +36,5 @@ module.exports = async req =>
     if (!tokenNecessary(req)) return true;
     const token = req.headers['authorization'];
     const valid = await verifyToken(token, req.path);
-    console.log('====================================');
-    console.log(valid);
-    console.log('====================================');
     return valid;
 }

@@ -8,7 +8,7 @@ module.exports = token =>
     const selector = {
         where:
         {
-            user_id = token.user_id
+            user_iD: token.user_id
         }
     }
     const valuesToUpdate = {
