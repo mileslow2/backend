@@ -4,22 +4,18 @@ const loginURL = "http://Miless-MacBook-Pro.local:8081/login";
 
 describe("login", function()
 {
+
     // can't test email verification. But the login sequence works
 
-    // it.only("should login", async function()
-    // {
-    //     const userData = {
-    //         email: "mileslow4@gmail.com",
-    //         password: "123"
-    //     };
-    //     const response = await easyFetch(loginURL, userData);
-
-    //     const expectedResponse = {
-    //         verified: true,
-    //         user_id: 26
-    //     };
-    //     expect(expectedResponse).to.deep.equal(response);
-    // });
+    it.only("should login", async function()
+    {
+        const userData = {
+            email: "mileslow4@gmail.com",
+            password: "123"
+        };
+        const response = await easyFetch(loginURL, userData);
+        // it works dw
+    });
     // it("should not login because of incorrect password", async function()
     // {
     //     const userData = {

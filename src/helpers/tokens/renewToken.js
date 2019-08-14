@@ -1,7 +1,4 @@
-const
-{
-    update
-} = require('../../database/models/tokens');
+const tokens = require('../../database/models/tokens');
 
 module.exports = token =>
 {
@@ -14,7 +11,7 @@ module.exports = token =>
     const valuesToUpdate = {
         iat: token.iat
     }
-    update(valuesToUpdate, selector)
+    tokens.update(valuesToUpdate, selector)
         .catch(err =>
         {
             throw err;

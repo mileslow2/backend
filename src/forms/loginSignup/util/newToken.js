@@ -1,15 +1,12 @@
 const
 {
-    sign
+    sign,
+    decode
 } = require('jsonwebtoken');
 const renewToken = require('../../../helpers/tokens/renewToken');
 
-module.exports = (expiresIn, path, user_id) =>
+function makeSignedToken(user_id, secret, expiresIn)
 {
-    let secret = process.env.secret;
-    if (path != "register")
-        secret = process.env.passwordSecret;
-
     return (
         sign(
             {
@@ -18,12 +15,17 @@ module.exports = (expiresIn, path, user_id) =>
             secret,
             {
                 expiresIn
-            },
-            test =>
-            {
-                console.log('====================================');
-                console.log(test);
-                console.log('====================================');
-            })
-    );
+            }
+        ));
+}
+
+module.exports = async (expiresIn, path, user_id) =>
+{
+    let secret = process.env.secret;
+    if (path != "register")
+        secret = process.env.passwordSecret;
+    const token = await makeSignedToken(user_id, secret, expiresIn);
+    const decoded = await decode(token);
+    await renewToken(token);
+    return token;
 }
