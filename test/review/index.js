@@ -1,5 +1,5 @@
 require('./addReviewTest');
-require('./changeReviewTest');
-require('./getReviewsFromPlaceTest');
-require('./getReviewsFromUserTest');
-require('./deleteReviewTest');
+// require('./changeReviewTest');
+// require('./getReviewsFromPlaceTest');
+// require('./getReviewsFromUserTest');
+// require('./deleteReviewTest');

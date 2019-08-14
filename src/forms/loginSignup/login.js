@@ -10,7 +10,8 @@ module.exports = async app =>
         passwordAttempt,
         hashedPassword,
         verified,
-        body;
+        body,
+        user_id;
     app.post("/login", async (req, res) =>
     {
         if (await usedDefense(req, res, keys)) return;
@@ -31,9 +32,10 @@ module.exports = async app =>
             res.status(422).send("false");
         else
         {
+            user_id = userData.user_id;
             body = {
-                user_id: userData.user_id,
-                token: await newToken("7d", "register")
+                user_id,
+                token: await newToken("7d", "register", userData.user_id)
             };
             res.status(200).send(body);
         }

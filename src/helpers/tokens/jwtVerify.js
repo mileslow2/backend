@@ -2,6 +2,7 @@ const
 {
     verify
 } = require('jsonwebtoken');
+const checkIfTokenRenewed = require('./checkIfTokenRenewed');
 
 function tokenNecessary(req)
 {
@@ -16,16 +17,17 @@ function tokenNecessary(req)
 function verifyToken(token, path)
 {
     let secret = process.env.secret;
-    if (path == "forgotPassword")
+    if (path == "/forgotPassword")
         secret = process.env.passwordSecret;
     return verify(
         token,
         secret,
-        (err, token) =>
+        async (err, token) =>
         {
-
-            if (err || await) return false;
-            return true;
+            const renewed = await checkIfTokenRenewed(token);
+            if (err || renewed)
+                return false;
+            else return true;
         });
 }
 
@@ -34,5 +36,8 @@ module.exports = async req =>
     if (!tokenNecessary(req)) return true;
     const token = req.headers['authorization'];
     const valid = await verifyToken(token, req.path);
+    console.log('====================================');
+    console.log(valid);
+    console.log('====================================');
     return valid;
 }
