@@ -22,7 +22,7 @@ module.exports = async app =>
     });
     app.get('/passwordReset', async (req, res) =>
     {
-        // passwordChanged = await changePassword(req.query);
+        passwordChanged = await changePassword(req.query);
         statusCode = passwordChanged ? 200 : 500;
         res.status(statusCode).send(passwordChanged)
     });
