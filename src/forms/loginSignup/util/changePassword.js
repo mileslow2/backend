@@ -1,9 +1,9 @@
-const user = require("../../database/models/user");
+const user = require("../../../database/models/user");
 const hashPassword = require("../../../helpers/hashPassword");
 
 module.exports = async body =>
 {
-    const password = await hashPassword(body.password);
+    const password = await hashPassword(body.password, );
     const selector = {
         where:
         {

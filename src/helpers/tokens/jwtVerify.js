@@ -7,22 +7,24 @@ function tokenNecessary(req)
 {
     if (req.path == "/login" ||
         req.path == "/register" ||
-        req.path == "resetPassword")
+        req.path == "/forgotPassword"
+    )
         return false;
     return true;
 }
 
-async function verifyToken(token)
+function verifyToken(token, path)
 {
     let secret = process.env.secret;
-    if (path = resetPassword)
+    if (path == "forgotPassword")
         secret = process.env.passwordSecret;
-    return await verify(
+    return verify(
         token,
         secret,
-        err =>
+        (err, token) =>
         {
-            if (err) return false;
+
+            if (err || await) return false;
             return true;
         });
 }

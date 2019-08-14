@@ -12,7 +12,7 @@ async function makeLink(to, path)
     if (path == "register")
         url += "emailVerify?email=" + to + "&token=" + await newToken("1d", path);
     else
-        url += "passwordResetVerify?email=" + to + "&token=" + await newToken("1d", path);
+        url += "passwordReset?email=" + to + "&token=" + await newToken("1d", path);
     return url;
 }
 
