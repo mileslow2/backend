@@ -1,21 +1,33 @@
-const jwt = require('jsonwebtoken');
+const
+{
+    verify
+} = require('jsonwebtoken');
+const checkIfTokenRenewed = require('./checkIfTokenRenewed');
 
 function tokenNecessary(req)
 {
-    if (req.path == "/register" || req.path == "/login")
+    if (req.path == "/login" ||
+        req.path == "/register" ||
+        req.path == "/forgotPassword"
+    )
         return false;
     return true;
 }
 
-async function verify(token)
+function verifyToken(token, path)
 {
-    return await jwt.verify(
+    let secret = process.env.secret;
+    if (path == "/forgotPassword")
+        secret = process.env.passwordSecret;
+    return verify(
         token,
-        process.env.secret,
-        err =>
+        secret,
+        async (err, token) =>
         {
-            if (err) return false;
-            return true;
+            const renewed = await checkIfTokenRenewed(token);
+            if (err || renewed)
+                return false;
+            else return true;
         });
 }
 
@@ -23,6 +35,6 @@ module.exports = async req =>
 {
     if (!tokenNecessary(req)) return true;
     const token = req.headers['authorization'];
-    const valid = await verify(token);
+    const valid = await verifyToken(token, req.path);
     return valid;
 }

@@ -32,6 +32,7 @@ describe('jwt testing', function()
         await deleteUser(newUser.email);
         const res = await fetch(url, newUser);
         expect(true).to.be.equal(res);
+        //email works
     })
 
 })

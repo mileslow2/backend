@@ -49,10 +49,9 @@ module.exports = async app =>
         query = registerQuery(userData);
         userData.password = await hashPassword(userData.password);
         registerSuccesful = await registerUser(query);
-
         if (registerSuccesful)
         {
-            sendVerificationEmail(req.body.email);
+            sendVerificationEmail(req.body.email, "register");
             res.status(201).end("true");
         }
         else res.status(422).end("false");
