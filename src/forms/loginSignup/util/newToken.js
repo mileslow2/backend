@@ -26,6 +26,6 @@ module.exports = async (expiresIn, path, user_id) =>
         secret = process.env.passwordSecret;
     const token = await makeSignedToken(user_id, secret, expiresIn);
     const decoded = await decode(token);
-    await renewToken(token);
+    await renewToken(decoded);
     return token;
 }
