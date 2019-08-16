@@ -46,8 +46,8 @@ module.exports = async app =>
     {
         if (await usedDefense(req, res, keys)) return;
         userData = req.body;
-        query = registerQuery(userData);
         userData.password = await hashPassword(userData.password);
+        query = registerQuery(userData);
         registerSuccesful = await registerUser(query);
         if (registerSuccesful)
         {

@@ -8,7 +8,7 @@ function infoQuery(restaurant_id)
         {
             restaurant_id
         },
-        attributes: ["description", "address", "phone_number", "restaurant_hours", "google_maps_id"]
+        attributes: ["description", "address", "phone_number", "hours", "google_maps_id"]
     };
 }
 async function getPlaceInfo(restaurant_id)
@@ -37,7 +37,7 @@ async function getMissingInfo(googleMapsID)
 module.exports = async app =>
 {
     const keys = ["id"]
-    var info, body;
+    let info;
     app.post("/getPlaceInfo", async (req, res) =>
     {
         if (await usedDefense(req, res, keys)) return;

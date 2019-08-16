@@ -26,7 +26,9 @@ function verifyToken(token, path)
         {
             const renewed = await checkIfTokenRenewed(token);
             if (err || renewed)
+            {
                 return false;
+            }
             else return true;
         });
 }

@@ -17,7 +17,10 @@ async function getPlaces()
 {
     return await sequelize
         .query("select * from `restaurant_infos`")
-        .catch(err => (console.log(err.message)))
+        .catch(err =>
+        {
+            throw err;
+        })
         .then(res =>
         {
             return res[0];
@@ -32,9 +35,9 @@ function objContainsNull(obj)
     return false;
 }
 
-describe('get places', function()
+describe('get places', async function()
 {
-    it.only("should get places from Google Maps and add them to DB", async function()
+    it("should get places from Google Maps and add them to DB", async function()
     {
         await deletePlaces();
         const loc = {
@@ -51,6 +54,7 @@ describe('get places', function()
         await sleep.sleep(4);
         const placesFromDB = await getPlaces();
         const place = placesFromDB[0];
+        delete place.description; // sometimes this will be null so I don'r want it to interfere
         expect(false).to.be.equal(objContainsNull(place));
     });
 });

@@ -13,28 +13,26 @@ function turnKeysToString(obj)
 
 async function makeExpectedResponse()
 {
+    const query = "select * from restaurant_infos limit 1;";
     return await seq
-        .query("select `restaurant_id`, `address`, `google_maps_id` from restaurant_infos limit 1;")
+        .query(query)
         .then(res =>
         {
-
             return turnKeysToString(res[0][0]);
         })
 }
 
 describe("get place info", function()
 {
-    it.only("should get the right place info", async function()
+    it("should get the right place info", async function()
     {
         let expectedRes = await makeExpectedResponse();
         const body = {
             id: expectedRes.restaurant_id
         };
         const res = await easyFetch(url, body);
-        console.log('====================================');
-        console.log(res);
-        console.log('====================================');
-        // expect(expectedRes).to.deep.equal(res)
+        delete expectedRes.restaurant_id;
+        expect(expectedRes).to.deep.equal(res)
     });
     it("should result in false because of wrong id", async function()
     {
@@ -42,8 +40,9 @@ describe("get place info", function()
         const body = {
             id
         };
-        const response = await easyFetch(url, body);
-        expect(response).to.be.equal(false);
+        const res = await easyFetch(url, body);
+        const isErr = res.hasOwnProperty("err");
+        expect(true).to.be.equal(isErr);
     });
     it("should result in false because bad id", async function()
     {
@@ -51,7 +50,8 @@ describe("get place info", function()
         const body = {
             id
         };
-        const response = await easyFetch(url, body);
-        expect(response).to.be.equal(false);
+        const res = await easyFetch(url, body);
+        const isErr = res.hasOwnProperty("err");
+        expect(isErr).to.be.equal(true);
     });
 });

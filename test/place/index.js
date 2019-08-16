@@ -1,2 +1,2 @@
-// require("./getPlaceInfoTest");
+require("./getPlaceInfoTest");
 require("./getPlacesTest");
