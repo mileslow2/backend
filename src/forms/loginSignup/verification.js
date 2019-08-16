@@ -27,7 +27,8 @@ async function validateUser(email)
     }
     await user
         .update(valuesToSelect, selector)
-        .catch({
+        .catch(err =>
+        {
             throw err;
         })
 }

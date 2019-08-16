@@ -16,7 +16,8 @@ async function getPlaceInfo(restaurant_id)
     const fromRestaurantID = infoQuery(restaurant_id);
     return await restaurant_info
         .findOne(fromRestaurantID)
-        .catch({
+        .catch(err =>
+        {
             throw err;
         })
         .then(results =>

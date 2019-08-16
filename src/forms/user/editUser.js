@@ -20,7 +20,8 @@ async function editUserAction(body)
     var returnVal = false;
     await user
         .update(valuesToSelect, selector)
-        .catch({
+        .catch(err =>
+        {
             throw err;
         })
         .then(res =>
