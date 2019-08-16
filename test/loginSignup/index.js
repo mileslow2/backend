@@ -1,2 +1,2 @@
-// require('./registerTest');
+require('./registerTest');
 require('./loginTest');

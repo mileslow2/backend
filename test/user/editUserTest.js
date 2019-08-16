@@ -3,7 +3,7 @@ const easyFetch = require('../helpers/easyFetch');
 const user = require('../../src/database/models/user')
 const url = "http://Miless-MacBook-Pro.local:8081/editUser";
 
-async function fixUser()
+function fixUser()
 {
     const selector = {
         where:
@@ -16,9 +16,12 @@ async function fixUser()
         first_name: "miles",
         last_name: "low"
     }
-    await user
+    user
         .update(valuesToSelect, selector)
-        .catch(err => console.log(err.message))
+        .catch(err =>
+        {
+            throw err;
+        });
 }
 
 describe("edit user info", function()

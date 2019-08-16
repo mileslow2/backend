@@ -1,6 +1,6 @@
 require('dotenv').config();
-require('./user');
 require('./loginSignup');
+require('./user');
 require('./review');
 require("./place");
 

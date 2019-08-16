@@ -22,13 +22,13 @@ function findIfErrorCauseIsUnknown(errorMessage)
 
 async function registerUser(query)
 {
-    var returnVal, errorIsUknown;
+    var returnVal, errorIsunknown;
     await user
         .create(query)
         .catch(err =>
         {
-            errorIsUknown = findIfErrorCauseIsUnknown(err.message);
-            if (errorIsUknown) errorHandler(err);
+            errorIsunknown = findIfErrorCauseIsUnknown(err.message);
+            if (errorIsunknown) throw err;
             returnVal = false;
         })
         .then(result =>
@@ -46,8 +46,8 @@ module.exports = async app =>
     {
         if (await usedDefense(req, res, keys)) return;
         userData = req.body;
-        query = registerQuery(userData);
         userData.password = await hashPassword(userData.password);
+        query = registerQuery(userData);
         registerSuccesful = await registerUser(query);
         if (registerSuccesful)
         {

@@ -1,33 +1,27 @@
 const expect = require("chai").expect;
 const easyFetch = require("../helpers/easyFetch");
 const loginURL = "http://Miless-MacBook-Pro.local:8081/login";
+const tokenInDB = require('./util/tokenInDB');
 
 describe("login", function()
 {
-
-    // can't test email verification. But the login sequence works
-
-    it.only("should login", async function()
+    it("response should have a token and userID", async function()
     {
         const userData = {
             email: "mileslow4@gmail.com",
             password: "123"
         };
-        const response = await easyFetch(loginURL, userData);
-        // it works dw
+        const res = await easyFetch(loginURL, userData);
+        const hasToken = res.hasOwnProperty('token');
+        const hasUserID = res.hasOwnProperty('user_id');
+        expect(true).to.be.equal(hasToken);
+        expect(true).to.be.equal(hasUserID);
     });
-    // it("should not login because of incorrect password", async function()
-    // {
-    //     const userData = {
-    //         email: "mileslow4@gmail.com",
-    //         password: "567"
-    //     };
-    //     const response = await easyFetch(loginURL, userData);
-    //     const expectedResponse = {
-    //         verified: false
-    //     };
-    //     expect(expectedResponse).to.deep.equal(response);
-    // });
+    it("new token should be in DB", async function()
+    {
+        const tokenExists = await tokenInDB("26");
+        expect(true).to.be.equal(tokenExists);
+    });
     // it("should not login because of incorrect email", async function()
     // {
     //     const userData = {

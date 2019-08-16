@@ -13,20 +13,22 @@ function formatList(placeList)
         placeList[i] = formatPlace(placeList[i]);
 }
 
-function addCompletePlacesToDB(placeList)
+async function addCompletePlacesToDB(placeList)
 {
-    for (let i = 0, len = placeList.length; i < len; i++)
-        addPlace(placeList[i]);
+    await Promise.all(
+        placeList.map(addPlace)
+    );
 }
 
 async function uploadImagesToCDN(placeList)
 {
-    let photoRef;
-    for (let i = 0, len = placeList.length; i < len; i++)
-    {
-        photoRef = placeList[i].photos[0].photo_reference;
-        addImage(photoRef, placeList[i].googleMapsID);
-    }
+    await Promise.all(
+        placeList.map(async place =>
+        {
+            const photoRef = place.photos[0].photo_reference;
+            await addImage(photoRef, place.googleMapsID);
+        })
+    );
 }
 
 function fetchPlaceDetails(google_maps_id)
@@ -46,21 +48,23 @@ function fetchPlaceDetails(google_maps_id)
         });
 }
 
+
 async function addMissingInfo(placeList)
 {
-    let google_maps_id, placeDetails;
-    for (let i = 0, len = placeList.length; i < len; i++)
-    {
-        google_maps_id = placeList[i].place_id;
-        placeDetails = await fetchPlaceDetails(google_maps_id);
-        Object.assign(placeList[i], placeDetails);
-    }
+    await Promise.all(
+        placeList.map(async listItem =>
+        {
+            const google_maps_id = listItem.place_id;
+            const placeDetails = await fetchPlaceDetails(google_maps_id);
+            Object.assign(listItem, placeDetails);
+        })
+    );
 }
 
 module.exports = async placeList =>
 {
     await addMissingInfo(placeList);
-    await formatList(placeList);
+    formatList(placeList);
     await addCompletePlacesToDB(placeList);
     uploadImagesToCDN(placeList);
     addDescriptionsToDB(placeList);

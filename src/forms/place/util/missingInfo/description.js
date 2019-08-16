@@ -68,7 +68,6 @@ module.exports = async placeList =>
         .forBrowser("firefox")
         .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
         .build();
-
     for (let i = 0, len = urlList.length; i < len; i++)
     {
         try

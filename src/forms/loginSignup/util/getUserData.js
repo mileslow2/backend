@@ -16,7 +16,10 @@ async function getUserData(query)
     let userData = null;
     await user
         .findOne(query)
-        .catch(errorHandler)
+        .catch(err =>
+        {
+            throw err;
+        })
         .then(data =>
         {
             if (data !== null) userData = data.dataValues;

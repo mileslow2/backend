@@ -2,6 +2,7 @@ const tokens = require('../../database/models/tokens');
 
 module.exports = token =>
 {
+    delete token.exp;
     return tokens.findOne(
         {
             where: token
@@ -14,4 +15,4 @@ module.exports = token =>
         {
             return res === null;
         })
-}
+};
