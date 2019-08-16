@@ -17,7 +17,9 @@ async function userInfoAction(query)
     var returnValue;
     await user
         .findOne(query)
-        .catch(errorHandler)
+        .catch({
+            throw err;
+        })
         .then(data =>
         {
             if (data == null) returnValue = false;

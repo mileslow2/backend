@@ -27,7 +27,9 @@ async function validateUser(email)
     }
     await user
         .update(valuesToSelect, selector)
-        .catch(errorHandler)
+        .catch({
+            throw err;
+        })
 }
 
 module.exports = async app =>
