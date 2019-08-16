@@ -3,7 +3,10 @@ const sequelize = require('../../src/database/connect');
 const fetch = require('../helpers/easyFetch');
 const url = "http://Miless-MacBook-Pro.local:8081/getRestaurants";
 const nearbyPlaces = require('./util/placeList');
-const sleep = require('sleep');
+const
+{
+    msleep
+} = require('sleep');
 
 async function deletePlaces()
 {
@@ -35,7 +38,7 @@ function objContainsNull(obj)
     return false;
 }
 
-describe('get places', async function()
+describe('get places', function()
 {
     it("should get places from Google Maps and add them to DB", async function()
     {
@@ -51,10 +54,10 @@ describe('get places', async function()
     })
     it('should check if places are in db', async function()
     {
-        await sleep.sleep(4);
+        await msleep(2000);
         const placesFromDB = await getPlaces();
         const place = placesFromDB[0];
-        delete place.description; // sometimes this will be null so I don'r want it to interfere
+        delete place.description; // sometimes this will  be null so I don'r want it to interfere
         expect(false).to.be.equal(objContainsNull(place));
     });
 });

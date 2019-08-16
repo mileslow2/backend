@@ -1,8 +1,8 @@
 require('dotenv').config();
 require('./loginSignup');
 require('./user');
-require("./place");
 require('./review');
+require("./place");
 
 // this is for email testing
 // require('./JWT/jwt');

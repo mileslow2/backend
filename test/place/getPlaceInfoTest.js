@@ -32,13 +32,14 @@ describe("get place info", function()
         };
         const res = await easyFetch(url, body);
         delete expectedRes.restaurant_id;
+        delete res.description;
+        delete expectedRes.description;
         expect(expectedRes).to.deep.equal(res)
     });
     it("should result in false because of wrong id", async function()
     {
-        const id = 1 + "";
         const body = {
-            id
+            id: "1"
         };
         const res = await easyFetch(url, body);
         const isErr = res.hasOwnProperty("err");
