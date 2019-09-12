@@ -2,10 +2,8 @@ const expect = require('chai').expect;
 const fetch = require('../helpers/easyFetch');
 const url = 'http://Miless-MacBook-Pro.local:8081/feedback';
 
-describe('feedback email testing', function()
-{
-    it('should email me the feedback', async function()
-    {
+describe('feedback email testing', function () {
+    it('should email me the feedback', async function () {
         const body = {
             subject: "foo",
             email: "mileslow2@gmail.com",

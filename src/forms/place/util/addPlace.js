@@ -1,8 +1,7 @@
 const restaurants = require("../../../database/models/restaurants");
 const sequelize = require("../../../database/connect");
 
-async function newMarker(data)
-{
+async function newMarker(data) {
     const marker = {
         lat: data.lat,
         lng: data.lng,
@@ -11,21 +10,17 @@ async function newMarker(data)
     var restaurant_id;
     await restaurants
         .create(marker)
-        .catch(err =>
-        {
+        .catch(err => {
             throw (err)
         })
-        .then(res =>
-        {
+        .then(res => {
             restaurant_id = res.dataValues.restaurant_id
         })
     return restaurant_id;
 }
 
 
-
-async function newInfo(data, id)
-{
+async function newInfo(data, id) {
     data.phoneNumber = parseInt(data.phoneNumber)
     const rawQuery =
         "INSERT INTO `glutenMaps`.`restaurant_infos`" +
@@ -39,13 +34,11 @@ async function newInfo(data, id)
         ")";
     await sequelize
         .query(rawQuery)
-        .catch(err =>
-        {
+        .catch(err => {
             throw (err)
         })
 }
 
-module.exports = async data =>
-{
+module.exports = async data => {
     await newInfo(data, await newMarker(data));
 }

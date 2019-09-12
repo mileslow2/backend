@@ -1,23 +1,20 @@
 const user = require('../../../database/models/user');
 
 
-module.exports = email =>
-{
+module.exports = email => {
     const query = {
         where:
-        {
-            email
-        },
+            {
+                email
+            },
         attributes: ["user_id"]
     }
     return user
         .findOne(query)
-        .catch(err =>
-        {
+        .catch(err => {
             throw (err);
         })
-        .then(res =>
-        {
+        .then(res => {
             console.log('====================================');
             console.log(res);
             console.log('====================================');

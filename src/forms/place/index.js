@@ -1,7 +1,6 @@
 const getPlaces = require('./getRestaurants');
 const getPlaceInfo = require('./getPlaceInfo');
-module.exports = app =>
-{
+module.exports = app => {
     getPlaceInfo(app);
     getPlaces(app);
 };

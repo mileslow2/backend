@@ -3,10 +3,8 @@ const easyFetch = require("../helpers/easyFetch");
 const loginURL = "http://Miless-MacBook-Pro.local:8081/login";
 const tokenInDB = require('./util/tokenInDB');
 
-describe("login", function()
-{
-    it("response should have a token and userID", async function()
-    {
+describe("login", function () {
+    it("response should have a token and userID", async function () {
         const userData = {
             email: "mileslow4@gmail.com",
             password: "123"
@@ -17,8 +15,7 @@ describe("login", function()
         expect(true).to.be.equal(hasToken);
         expect(true).to.be.equal(hasUserID);
     });
-    it("new token should be in DB", async function()
-    {
+    it("new token should be in DB", async function () {
         const tokenExists = await tokenInDB("26");
         expect(true).to.be.equal(tokenExists);
     });

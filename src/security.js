@@ -1,6 +1,5 @@
 const JWTVerify = require('./helpers/tokens/jwtVerify');
 
-
 function checkIfNotObj(correctObjKeys, req)
 {
     for (let i = 0; i < correctObjKeys.length; i++)
@@ -21,7 +20,6 @@ function isBad(obj) // change the name
     }
     return false;
 }
-
 
 
 module.exports = async (req, res, keys) =>

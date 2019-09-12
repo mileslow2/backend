@@ -1,18 +1,15 @@
 const tokens = require('../../database/models/tokens');
 
-module.exports = token =>
-{
+module.exports = token => {
     delete token.exp;
     return tokens.findOne(
         {
             where: token
         })
-        .catch((err) =>
-        {
+        .catch((err) => {
             throw err;
         })
-        .then(res =>
-        {
+        .then(res => {
             return res === null;
         })
 };

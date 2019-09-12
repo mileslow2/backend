@@ -2,44 +2,37 @@ const jwt = require('jsonwebtoken');
 const user = require('../../database/models/user');
 const secret = process.env.secret;
 
-async function checkValidity(token)
-{
+async function checkValidity(token) {
     return await jwt.verify(
         token,
         secret,
-        err =>
-        {
+        err => {
             if (err) return false;
             else return true;
         });
 }
 
-async function validateUser(email)
-{
+async function validateUser(email) {
     const valuesToSelect = {
         verified: 1
-    }
+    };
     const selector = {
         where:
-        {
-            email
-        }
-    }
+            {
+                email
+            }
+    };
     await user
         .update(valuesToSelect, selector)
-        .catch(err =>
-        {
+        .catch(err => {
             throw err;
-        })
+        });
 }
 
-module.exports = async app =>
-{
-    app.get("/emailVerify", async (req, res) =>
-    {
+module.exports = async app => {
+    app.get("/emailVerify", async (req, res) => {
         const tokenValid = await checkValidity(req.query.token);
-        if (tokenValid)
-        {
+        if (tokenValid) {
             await validateUser(req.query.email);
             res.status(200).send("true");
         }

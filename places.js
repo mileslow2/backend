@@ -1,14 +1,13 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
+
 // const addPlace = require('./src/helpers/getRestaurants/addPlace');
 
-function makeParam(param, value)
-{
+function makeParam(param, value) {
     return param + "=" + value + "&";
 }
 
-function removeDigits(decimal, finalLength)
-{
+function removeDigits(decimal, finalLength) {
     var str = decimal.toString()
     while (str.length > finalLength)
         str = str.substr(0, str.length - 1);
@@ -16,8 +15,7 @@ function removeDigits(decimal, finalLength)
 }
 
 
-async function run()
-{
+async function run() {
     const loc = {
         latitude: 41.02444986511796,
         longitude: -72.4816286306909
@@ -37,8 +35,7 @@ async function run()
 
     await fetch(googleMapRequest)
         .then(res => res.json())
-        .then(async res =>
-        {
+        .then(async res => {
             console.log('====================================');
             console.log(process.env.googleMapsAPIKey);
             console.log('====================================');

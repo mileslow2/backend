@@ -3,8 +3,7 @@ const review = require('../../database/models/review');
 const alterReview = require('./util/alterReview');
 const checkIfReviewExists = require('./util/reviewExists');
 
-async function handleReview(reviewBody)
-{
+async function handleReview(reviewBody) {
     const reviewExists = await checkIfReviewExists(reviewBody);
     if (reviewExists)
         return await alterReview(reviewBody);
@@ -12,24 +11,20 @@ async function handleReview(reviewBody)
         return await addReview(reviewBody);
 }
 
-async function addReview(reviewBody)
-{
+async function addReview(reviewBody) {
     let worked = true;
     await review
         .create(reviewBody)
-        .catch(() =>
-        {
+        .catch(() => {
             worked = false
         });
     return worked;
 }
 
-module.exports = app =>
-{
+module.exports = app => {
     const keys = ["stars", "user_id", "restaurant_id", "body"];
     var reviewAdded, statusCode;
-    app.post("/addReview", async (req, res) =>
-    {
+    app.post("/addReview", async (req, res) => {
         if (await usedDefense(req, res, keys)) return;
         reviewAdded = await handleReview(req.body);
         statusCode = reviewAdded ? 200 : 400;

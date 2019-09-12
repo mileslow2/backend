@@ -1,17 +1,15 @@
 const user = require('../../../database/models/user');
 
-module.exports = email =>
-{
+module.exports = email => {
     return user
         .findOne(
-        {
-            where:
             {
-                email
-            }
-        })
-        .catch(err =>
-        {
+                where:
+                    {
+                        email
+                    }
+            })
+        .catch(err => {
             throw (err);
         })
 }

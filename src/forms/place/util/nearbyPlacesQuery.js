@@ -1,7 +1,6 @@
 const changeDecimals = require('./changeDecimals');
 
-module.exports = loc =>
-{
+module.exports = loc => {
     loc.lat = changeDecimals(loc.lat, 8);
     loc.lng = changeDecimals(loc.lng, 8);
     var highLat = loc.lat + .5;

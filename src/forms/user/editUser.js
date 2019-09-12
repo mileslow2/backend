@@ -4,13 +4,12 @@ const user = require("../../database/models/user");
 const usedDefense = require("../../security");
 
 
-async function editUserAction(body)
-{
+async function editUserAction(body) {
     const selector = {
         where:
-        {
-            user_id: body.id
-        }
+            {
+                user_id: body.id
+            }
     }
     const valuesToSelect = {
         email: body.email,
@@ -20,28 +19,23 @@ async function editUserAction(body)
     var returnVal = false;
     await user
         .update(valuesToSelect, selector)
-        .catch(err =>
-        {
+        .catch(err => {
             throw err;
         })
-        .then(res =>
-        {
+        .then(res => {
             returnVal = true;
         });
     return returnVal;
 }
 
-module.exports = app =>
-{
+module.exports = app => {
     const editUserKeys = ["id", "email", "first_name", "last_name", "password"]
     var passwordAttempt, passwordsSame, editUserSuccesful, badReq;
-    app.post("/editUser", async (req, res) =>
-    {
+    app.post("/editUser", async (req, res) => {
         badReq = await usedDefense(req, res, editUserKeys);
         if (badReq) return;
         hashedPassword = await getPasswordFrom(req.body.id);
-        if (hashedPassword == undefined)
-        {
+        if (hashedPassword == undefined) {
             res.status(422).send("false");
             return;
         }

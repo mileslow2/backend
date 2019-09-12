@@ -1,5 +1,4 @@
-module.exports = (num, dec) =>
-{
+module.exports = (num, dec) => {
     num = num * -1;
     num = num.toFixed(dec);
     num = num * -1;

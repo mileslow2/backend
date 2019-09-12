@@ -1,27 +1,23 @@
 const user = require('../../../database/models/user')
 
-function userDataFrom(email)
-{
+function userDataFrom(email) {
     return {
         where:
-        {
-            email
-        },
+            {
+                email
+            },
         attributes: ["password", "user_id", "verified"]
     };
 }
 
-async function getUserData(query)
-{
+async function getUserData(query) {
     let userData = null;
     await user
         .findOne(query)
-        .catch(err =>
-        {
+        .catch(err => {
             throw err;
         })
-        .then(data =>
-        {
+        .then(data => {
             if (data !== null) userData = data.dataValues;
         });
     if (userData == null)
@@ -33,8 +29,7 @@ async function getUserData(query)
     return userData;
 }
 
-module.exports = async email =>
-{
+module.exports = async email => {
     const userData = userDataFrom(email);
     return await getUserData(userData);
 }

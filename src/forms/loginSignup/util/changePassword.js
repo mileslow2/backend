@@ -1,14 +1,13 @@
 const user = require("../../../database/models/user");
 const hashPassword = require("../../../helpers/hashPassword");
 
-module.exports = async body =>
-{
-    const password = await hashPassword(body.password, );
+module.exports = async body => {
+    const password = await hashPassword(body.password,);
     const selector = {
         where:
-        {
-            email: body.email
-        }
+            {
+                email: body.email
+            }
     };
     const valuesToChange = {
         password
@@ -16,8 +15,7 @@ module.exports = async body =>
     let changed = "true";
     await user
         .update(valuesToChange, selector)
-        .catch(() =>
-        {
+        .catch(() => {
             changed = "false";
         });
     return changed;

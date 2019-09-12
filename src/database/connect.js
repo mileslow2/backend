@@ -9,9 +9,9 @@ const sequelize = new Sequelize(
         dialect: "mysql",
         logging: false,
         define:
-        {
-            timestamps: false
-        }
+            {
+                timestamps: false
+            }
     });
 
 module.exports = sequelize;

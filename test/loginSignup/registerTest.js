@@ -4,47 +4,40 @@ const registerURL = "http://Miless-MacBook-Pro.local:8081/register";
 const comparePasswords = require("../../src/helpers/comparePasswords");
 const user = require("../../src/database/models/user");
 
-function deleteUserFrom(email)
-{
+function deleteUserFrom(email) {
     user
         .destroy(
-        {
-            where:
             {
-                email
-            }
-        })
-        .catch((err) =>
-        {
+                where:
+                    {
+                        email
+                    }
+            })
+        .catch((err) => {
             throw err;
         });
 }
 
-async function getUserFrom(email)
-{
+async function getUserFrom(email) {
     const userCriteria = {
         where:
-        {
-            email
-        },
+            {
+                email
+            },
         attributes: ["first_name", "email", "password", "last_name"]
     };
     return await user
         .findOne(userCriteria)
-        .catch((err) =>
-        {
+        .catch((err) => {
             throw err;
         })
-        .then(user =>
-        {
+        .then(user => {
             return user.toJSON()
         });
 }
 
-describe("register", function()
-{
-    it("should register a new user", async function()
-    {
+describe("register", function () {
+    it("should register a new user", async function () {
         const newUser = {
             password: "123",
             email: "mileslow2@gmail.com",
@@ -56,8 +49,7 @@ describe("register", function()
         expect(response).to.be.equal(true);
         //email works
     });
-    it('user should exist in db', async function()
-    {
+    it('user should exist in db', async function () {
         const newUser = {
             password: "123",
             email: "mileslow2@gmail.com",
@@ -75,8 +67,7 @@ describe("register", function()
         expect(newUser.email).to.be.equal(createdUser.email);
         expect(newUser.fullName).to.be.equal(createdUser.full_name);
     })
-    it("should not register because of weird name", async function()
-    {
+    it("should not register because of weird name", async function () {
         const newUser = {
             password: "123",
             email: "mileslow2@gmail.com",
@@ -86,8 +77,7 @@ describe("register", function()
         const response = await easyFetch(registerURL, newUser);
         expect(response).to.be.equal(false);
     });
-    it("should not register because email already exists", async function()
-    {
+    it("should not register because email already exists", async function () {
         const newUser = {
             password: "123",
             email: "mileslow2@gmail.com",
@@ -97,8 +87,7 @@ describe("register", function()
         const response = await easyFetch(registerURL, newUser);
         expect(response).to.be.equal(false);
     });
-    it("should not register because of bad user object", async function()
-    {
+    it("should not register because of bad user object", async function () {
         const newUser = {
             password: "123",
             email: "mileslow2@gmail.com",

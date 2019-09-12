@@ -1,39 +1,34 @@
 const user = require("../../database/models/user");
 const usedDefense = require("../../security");
 
-function userInfoQuery(user_id)
-{
+function userInfoQuery(user_id) {
     return {
         where:
-        {
-            user_id
-        },
+            {
+                user_id
+            },
         attributes: ["first_name", "email", "last_name"]
     };
 }
 
-async function userInfoAction(query)
-{
+async function userInfoAction(query) {
     var returnValue;
     await user
         .findOne(query)
-        .catch(err =>
-        {
+        .catch(err => {
             throw err;
         })
-        .then(data =>
-        {
+        .then(data => {
             if (data == null) returnValue = false;
             else returnValue = data.dataValues;
         });
     return returnValue;
 }
-module.exports = app =>
-{
+
+module.exports = app => {
     const keys = ["id"];
     var query, userInfo;
-    app.post("/getUserInfo", async (req, res) =>
-    {
+    app.post("/getUserInfo", async (req, res) => {
         if (await usedDefense(req, res, keys)) return;
         query = userInfoQuery(req.body.id);
         userInfo = await userInfoAction(query);

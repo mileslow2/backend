@@ -5,37 +5,32 @@ const fetch = require('../helpers/easyFetch');
 const url = "http://Miless-MacBook-Pro.local:8081/addReview";
 const deleteReview = require('./util/deleteReview');
 
-async function getReview(restaurant_id)
-{
+async function getReview(restaurant_id) {
     const findOne = {
         where:
-        {
-            user_id: "14",
-            restaurant_id
-        }
+            {
+                user_id: "14",
+                restaurant_id
+            }
     };
     let reviewFromDB;
     await review
         .findOne(findOne)
-        .catch((err) =>
-        {
+        .catch((err) => {
             throw (err.message);
         })
         .then(res => (reviewFromDB = res.dataValues));
     return reviewFromDB;
 }
 
-function turnKeysToString(obj)
-{
+function turnKeysToString(obj) {
     for (let key in obj)
         if (typeof obj[key] != "string")
             obj[key] = obj[key].toString();
 }
 
-describe('change the review', () =>
-{
-    it('should modify an added review', async function()
-    {
+describe('change the review', () => {
+    it('should modify an added review', async function () {
         const restaurant_id = await randRestID();
         let review = {
             stars: "4.7",

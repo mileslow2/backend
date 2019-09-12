@@ -1,23 +1,19 @@
-const formatHours = openingHours =>
-{
+const formatHours = openingHours => {
     let timeAsInt = "";
     let len = openingHours.periods.length;
-    for (let i = 0; i < len; i++)
-    {
+    for (let i = 0; i < len; i++) {
         timeAsInt += openingHours.periods[i].open.time;
         timeAsInt += openingHours.periods[i].close.time;
     }
     return timeAsInt;
 }
 
-const formatPhoneNumber = phoneNumber =>
-{
+const formatPhoneNumber = phoneNumber => {
     //removes all the non int values
     return phoneNumber.replace(/\D/g, '');
 }
 
-const formatPlace = place =>
-{
+const formatPlace = place => {
     return {
         phoneNumber: formatPhoneNumber(place.formatted_phone_number),
         hours: formatHours(place.opening_hours),
@@ -31,13 +27,11 @@ const formatPlace = place =>
     };
 }
 
-const formatDescription = desc =>
-{
+const formatDescription = desc => {
     let endIndex;
     desc = desc.replace("</span>", "");
     for (let i = 0; i < desc.length; i++)
-        if (desc[i] == "<")
-        {
+        if (desc[i] == "<") {
             endIndex = desc.search(">");
             desc = desc.substring(endIndex + 1, desc.length);
         }

@@ -3,21 +3,13 @@ const usedDefense = require("../../security");
 const getUserData = require('./util/getUserData');
 const newToken = require('./util/newToken');
 
-module.exports = async app =>
-{
+module.exports = async app => {
     const keys = ["email", "password"];
-    var userData,
-        passwordAttempt,
-        hashedPassword,
-        verified,
-        body,
-        user_id;
-    app.post("/login", async (req, res) =>
-    {
+    var userData, passwordAttempt, hashedPassword, verified, body, user_id;
+    app.post("/login", async (req, res) => {
         if (await usedDefense(req, res, keys)) return;
         userData = await getUserData(req.body.email);
-        if (!userData.verified)
-        {
+        if (!userData.verified) {
             res.status(422).send("please verify your account");
             return;
         }
@@ -28,16 +20,15 @@ module.exports = async app =>
                 passwordAttempt,
                 hashedPassword
             );
-        if (!verified)
-            res.status(422).send("false");
-        else
-        {
+        if (verified) {
             user_id = userData.user_id;
             body = {
                 user_id,
                 token: await newToken("7d", "register", userData.user_id)
             };
             res.status(200).send(body);
+        } else {
+            res.status(422).send("false");
         }
     });
 };

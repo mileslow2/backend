@@ -5,8 +5,7 @@ const randRestID = require('../helpers/randRestID');
 const addReview = require('./util/addReview');
 const deleteReview = require('./util/deleteReview');
 
-async function populate()
-{
+async function populate() {
     let google_maps_id = "ChIJcaqDn7-6woARNn2eauKOKSc";
     let restaurant_id = await randRestID(google_maps_id);
     restaurant_id = restaurant_id.toString();
@@ -17,10 +16,8 @@ async function populate()
     await addReview("14", restaurant_id);
 }
 
-describe('Get all reviews from a specific user', function()
-{
-    it('should get all reviews from a user_id', async function()
-    {
+describe('Get all reviews from a specific user', function () {
+    it('should get all reviews from a user_id', async function () {
         await populate();
         const body = {
             user_id: "14"
@@ -29,8 +26,7 @@ describe('Get all reviews from a specific user', function()
         await deleteReview(body);
         expect(2).to.be.equal(res.length);
     })
-    it('should return empty array', async function()
-    {
+    it('should return empty array', async function () {
         const body = {
             user_id: "14"
         }

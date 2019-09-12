@@ -3,26 +3,22 @@ const fetch = require('../helpers/easyFetch');
 const url = 'http://Miless-MacBook-Pro.local:8081/register';
 const user = require('../../src/database/models/user');
 
-async function deleteUser(email)
-{
+async function deleteUser(email) {
     await user
         .destroy(
-        {
-            where:
             {
-                email
-            }
-        })
-        .catch(err =>
-        {
+                where:
+                    {
+                        email
+                    }
+            })
+        .catch(err => {
             throw (err)
         })
 }
 
-describe('jwt testing', function()
-{
-    it('should email user trying to register', async function()
-    {
+describe('jwt testing', function () {
+    it('should email user trying to register', async function () {
         const newUser = {
             first_name: "miles",
             last_name: "low",

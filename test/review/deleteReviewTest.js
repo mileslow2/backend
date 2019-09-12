@@ -2,10 +2,8 @@ const expect = require('chai').expect;
 const fetch = require('../helpers/easyFetch');
 const randomRestID = require('../helpers/randRestID');
 
-describe('deleting reviews', function()
-{
-    it.only('should delete a review and respond with true', async function()
-    {
+describe('deleting reviews', function () {
+    it.only('should delete a review and respond with true', async function () {
         const restaurant_id = await randomRestID();
         const review = {
             stars: "4.7",

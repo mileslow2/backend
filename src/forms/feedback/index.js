@@ -1,4 +1,3 @@
-module.exports = async app =>
-{
+module.exports = async app => {
     require('./feedback')(app);
 }

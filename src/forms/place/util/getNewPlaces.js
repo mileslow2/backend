@@ -1,12 +1,10 @@
 const fetch = require('node-fetch');
 
-function makeParam(param, value)
-{
+function makeParam(param, value) {
     return param + "=" + value + "&";
 }
 
-function makeURL(loc)
-{
+function makeURL(loc) {
     let googleMapRequest =
         "https://maps.googleapis.com/maps/api/place/textsearch/json?";
     googleMapRequest += makeParam("input", "gluten-free");
@@ -22,13 +20,11 @@ function makeURL(loc)
 }
 
 
-module.exports = async loc =>
-{
+module.exports = async loc => {
     const url = makeURL(loc);
     return await fetch(url)
         .then(res => res.json())
-        .then(res =>
-        {
+        .then(res => {
             return res.results;
         });
 
